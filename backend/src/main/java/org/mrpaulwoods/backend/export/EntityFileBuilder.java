@@ -34,22 +34,16 @@ public final class EntityFileBuilder implements FileBuilder {
         FileBuilderUtil.appendClassAnnotations(technologies, ENTITY, appRequest, code);
 
         // class
-        code.append("public class ");
-        code.append(appRequest.getClassName());
-        code.append(" {\n\n");
+        FileBuilderUtil.appendClass("", appRequest, code);
 
         // fields
         appRequest.getFields().forEach(field -> {
 
             // annotations
-            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, ENTITY, field, code));
+            FileBuilderUtil.appendFieldAnnotations(technologies, ENTITY, appRequest, field, code);
 
             // field
-            code.append("\tprivate ");
-            code.append(field.getType());
-            code.append(" ");
-            code.append(field.getName());
-            code.append(";\n\n");
+            FileBuilderUtil.appendField(field.getType(), field.getName(), code);
 
         });
 

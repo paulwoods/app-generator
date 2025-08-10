@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/v1/generate")
@@ -19,7 +20,7 @@ public class GenerateController {
     private final GenerateService generateService;
 
     @PostMapping
-    public String generate(@Valid @RequestBody AppRequest appRequest) {
+    public Mono<String> generate(@Valid @RequestBody AppRequest appRequest) {
         log.info("generate: {}", appRequest);
         return generateService.generate(appRequest);
     }

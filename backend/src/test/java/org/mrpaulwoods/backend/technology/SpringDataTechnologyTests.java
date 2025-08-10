@@ -1,6 +1,7 @@
 package org.mrpaulwoods.backend.technology;
 
 import org.junit.jupiter.api.Test;
+import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SpringDataTechnologyTests {
 
-    StringBuilder sb = new StringBuilder();
+    Code code = new Code();
     AppRequest appRequest = new AppRequest();
     SpringDataTechnology technology = new SpringDataTechnology();
 
@@ -25,9 +26,9 @@ class SpringDataTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, code);
 
-        assertFalse(sb.isEmpty());
+        assertFalse(code.isEmpty());
     }
 
     @Test
@@ -38,9 +39,9 @@ class SpringDataTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, code);
 
-        assertTrue(sb.isEmpty());
+        assertTrue(code.isEmpty());
     }
 
 }

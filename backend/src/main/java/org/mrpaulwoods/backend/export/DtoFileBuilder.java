@@ -20,50 +20,49 @@ public final class DtoFileBuilder implements FileBuilder {
 
     @Override
     public void build(AppRequest appRequest, Code code) {
-        StringBuilder sb = code.getContent();
 
         // filename
 
-        sb.append("//file: src/main/java/");
-        sb.append(appRequest.getPkgAsFolder());
-        sb.append("/dto/");
-        sb.append(appRequest.getClassName());
-        sb.append("Dto.java\n\n");
+        code.append("//file: src/main/java/");
+        code.append(appRequest.getPkgAsFolder());
+        code.append("/dto/");
+        code.append(appRequest.getClassName());
+        code.append("Dto.java\n\n");
 
         // package
-        sb.append("package ");
-        sb.append(appRequest.getPkg());
-        sb.append(".dto;\n\n");
+        code.append("package ");
+        code.append(appRequest.getPkg());
+        code.append(".dto;\n\n");
 
         // imports
-        technologies.forEach(t -> t.importCodeBlock(appRequest, DTO, sb));
-        sb.append("\n");
+        technologies.forEach(t -> t.importCodeBlock(appRequest, DTO, code));
+        code.append("\n");
 
         // annotations
-        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, DTO, sb));
+        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, DTO, code));
 
         // class
-        sb.append("public class ");
-        sb.append(appRequest.getClassName());
-        sb.append("Dto {\n\n");
+        code.append("public class ");
+        code.append(appRequest.getClassName());
+        code.append("Dto {\n\n");
 
         // fields
         appRequest.getFields().forEach(field -> {
 
             // annotations
-            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, DTO, field, sb));
+            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, DTO, field, code));
 
             // field
-            sb.append("\tprivate ");
-            sb.append(field.getType());
-            sb.append(" ");
-            sb.append(field.getName());
-            sb.append(";\n\n");
+            code.append("\tprivate ");
+            code.append(field.getType());
+            code.append(" ");
+            code.append(field.getName());
+            code.append(";\n\n");
 
         });
 
         // end class
-        sb.append("}\n");
+        code.append("}\n");
 
     }
 

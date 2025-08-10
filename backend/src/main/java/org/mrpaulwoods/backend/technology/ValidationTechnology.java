@@ -1,5 +1,6 @@
 package org.mrpaulwoods.backend.technology;
 
+import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
@@ -9,36 +10,36 @@ import org.springframework.stereotype.Component;
 public final class ValidationTechnology implements Technology {
 
     @Override
-    public void importCodeBlock(AppRequest appRequest, FileBuilderType type, StringBuilder sb) {
+    public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
 
         if (appRequest.getFields().stream().anyMatch(f -> f.getMinSize() != null || f.getMaxSize() != null)) {
-            sb.append("import jakarta.validation.constraints.Size;\n");
+            code.append("import jakarta.validation.constraints.Size;\n");
         }
     }
 
     @Override
-    public void fieldAnnotationCodeBlock(AppRequest appRequest, FileBuilderType type, Field field, StringBuilder sb) {
+    public void fieldAnnotationCodeBlock(AppRequest appRequest, FileBuilderType type, Field field, Code code) {
 
         if (field.getMinSize() == null && field.getMaxSize() == null) {
             return;
         }
 
-        sb.append("\t@Size(");
+        code.append("\t@Size(");
 
         if (field.getMinSize() != null) {
-            sb.append("min = ");
-            sb.append(field.getMinSize());
+            code.append("min = ");
+            code.append(field.getMinSize());
             if (field.getMaxSize() != null) {
-                sb.append(", ");
+                code.append(", ");
             }
         }
 
         if (field.getMaxSize() != null) {
-            sb.append("max = ");
-            sb.append(field.getMaxSize());
+            code.append("max = ");
+            code.append(field.getMaxSize());
         }
 
-        sb.append(");\n");
+        code.append(");\n");
     }
 
 }

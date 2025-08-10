@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 public class LombokTechnology implements Technology {
 
     @Override
-    public void addImports(AppRequest appRequest, StringBuilder sb) {
+    public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {
         sb.append("import lombok.*;\n");
     }
 
     @Override
-    public void addClassAnnotations(AppRequest appRequest, StringBuilder sb) {
+    public void classAnnotationsCodeBlock(AppRequest appRequest, StringBuilder sb) {
         sb.append("@Data\n");
         sb.append("@Builder\n");
         sb.append("@NoArgsConstructor\n");

@@ -5,12 +5,12 @@ import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 
 public interface Technology {
-    void addImports(AppRequest appRequest, StringBuilder sb);
+    void importCodeBlock(AppRequest appRequest, StringBuilder sb);
 
-    default void addClassAnnotations(@Valid AppRequest appRequest, StringBuilder sb) {
+    default void classAnnotationsCodeBlock(@Valid AppRequest appRequest, StringBuilder sb) {
     }
 
-    default void addFieldAnnotation(@Valid AppRequest appRequest, Field field, StringBuilder sb) {
+    default void fieldAnnotationCodeBlock(@Valid AppRequest appRequest, Field field, StringBuilder sb) {
 
     }
 }

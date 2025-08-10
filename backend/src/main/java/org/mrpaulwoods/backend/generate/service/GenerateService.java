@@ -34,11 +34,11 @@ public class GenerateService {
         sb.append(".entity;\n\n");
 
         // imports
-        technologies.forEach(t -> t.addImports(appRequest, sb));
+        technologies.forEach(t -> t.importCodeBlock(appRequest, sb));
         sb.append("\n");
 
         // annotations
-        technologies.forEach(t -> t.addClassAnnotations(appRequest, sb));
+        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, sb));
 
         // class
         sb.append("public class ");
@@ -53,7 +53,7 @@ public class GenerateService {
         appRequest.getFields().forEach(field -> {
 
             // annotations
-            technologies.forEach(t -> t.addFieldAnnotation(appRequest, field, sb));
+            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, field, sb));
 
             // field
             sb.append("\tprivate ");

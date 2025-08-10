@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class UUIDTechnology implements Technology {
 
     @Override
-    public void addImports(AppRequest appRequest, StringBuilder sb) {
+    public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {
         sb.append("import java.util.UUID;\n");
     }
 

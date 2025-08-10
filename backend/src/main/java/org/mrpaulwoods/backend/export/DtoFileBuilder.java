@@ -10,8 +10,8 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Order(FileBuilder.ENTITY_ORDER)
-public final class EntityFileBuilder implements FileBuilder {
+@Order(FileBuilder.DTO_ORDER)
+public final class DtoFileBuilder implements FileBuilder {
 
     private final List<Technology> technologies;
 
@@ -21,14 +21,14 @@ public final class EntityFileBuilder implements FileBuilder {
         // filename
         sb.append("//file: src/main/java/");
         sb.append(appRequest.getPkgAsFolder());
-        sb.append("/entity/");
+        sb.append("/dto/");
         sb.append(appRequest.getClassName());
-        sb.append(".java\n\n");
+        sb.append("Dto.java\n\n");
 
         // package
         sb.append("package ");
         sb.append(appRequest.getPkg());
-        sb.append(".entity;\n\n");
+        sb.append(".dto;\n\n");
 
         // imports
         technologies.forEach(t -> t.importCodeBlock(appRequest, sb));
@@ -40,7 +40,7 @@ public final class EntityFileBuilder implements FileBuilder {
         // class
         sb.append("public class ");
         sb.append(appRequest.getClassName());
-        sb.append(" {\n\n");
+        sb.append("Dto {\n\n");
 
         // fields
         appRequest.getFields().forEach(field -> {
@@ -59,6 +59,7 @@ public final class EntityFileBuilder implements FileBuilder {
 
         // end class
         sb.append("}\n");
+
     }
 
 }

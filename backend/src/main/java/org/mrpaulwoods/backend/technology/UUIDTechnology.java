@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.StringUtils.endsWithIgnoreCase;
 import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
 
 @Component
-public class UUIDTechnology implements Technology {
+public final class UUIDTechnology implements Technology {
 
     @Override
     public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {

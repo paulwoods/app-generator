@@ -4,7 +4,7 @@ import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringDataTechnology implements Technology {
+public final class SpringDataTechnology implements Technology {
 
     @Override
     public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {

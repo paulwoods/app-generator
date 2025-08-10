@@ -5,7 +5,7 @@ import org.mrpaulwoods.backend.generate.dto.Field;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidationTechnology implements Technology {
+public final class ValidationTechnology implements Technology {
 
     @Override
     public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {

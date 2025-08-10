@@ -4,7 +4,7 @@ import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LombokTechnology implements Technology {
+public final class LombokTechnology implements Technology {
 
     @Override
     public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {

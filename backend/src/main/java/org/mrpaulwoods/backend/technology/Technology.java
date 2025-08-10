@@ -3,7 +3,7 @@ package org.mrpaulwoods.backend.technology;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 
-public interface Technology {
+public sealed interface Technology permits LombokTechnology, SpringDataTechnology, UUIDTechnology, ValidationTechnology {
 
     default void importCodeBlock(AppRequest appRequest, StringBuilder sb) {
     }

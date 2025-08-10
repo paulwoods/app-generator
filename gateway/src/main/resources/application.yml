@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+
 spring:
   application:
     name: gateway
@@ -14,8 +18,11 @@ spring:
               uri: http://localhost:9000
               predicates:
                 - Path=/backend/**
+              filters:
+                - RewritePath=/backend/(?<segment>.*), /$\{segment}
 
             - id: frontend
               uri: http://localhost:5173
               predicates:
                 - Path=/**
+

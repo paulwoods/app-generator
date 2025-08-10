@@ -22,4 +22,10 @@ public class FileBuilderUtil {
         code.setFileName(p.toString());
     }
 
+    public static void appendPackage(String entity, AppRequest appRequest, Code code) {
+        code.append("package ");
+        code.append(appRequest.getPkg());
+        code.append(".entity;\n\n");
+    }
+
 }

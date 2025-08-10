@@ -25,9 +25,7 @@ public final class DtoFileBuilder implements FileBuilder {
         FileBuilderUtil.buildFileName("src", "dto", "Dto", appRequest, code);
 
         // package
-        code.append("package ");
-        code.append(appRequest.getPkg());
-        code.append(".dto;\n\n");
+        FileBuilderUtil.appendPackage("entity", appRequest, code);
 
         // imports
         technologies.forEach(t -> t.importCodeBlock(appRequest, DTO, code));

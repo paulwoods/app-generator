@@ -25,7 +25,6 @@ public class GenerateService {
                 .map(BuilderCodePair::code)
                 .toList();
 
-
         StringBuilder sb = new StringBuilder();
         codes.forEach(c -> {
             sb.append("//file: ");
@@ -38,6 +37,7 @@ public class GenerateService {
 
     record BuilderCodePair(FileBuilder builder, Code code) {
     }
+
 }
 
 // builder.build(appRequest, sb)

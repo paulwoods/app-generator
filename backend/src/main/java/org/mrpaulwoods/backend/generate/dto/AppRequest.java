@@ -3,12 +3,15 @@ package org.mrpaulwoods.backend.generate.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 
 import java.nio.file.FileSystems;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppRequest {
 
     @NotBlank
@@ -20,6 +23,7 @@ public class AppRequest {
     private String pkg;
 
     @NotNull
+    @Singular
     private List<Field> fields;
 
     public String getClassName() {

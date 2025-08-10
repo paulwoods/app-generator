@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.nio.file.FileSystems;
+
 @Data
 public class AppRequest {
 
@@ -17,6 +19,11 @@ public class AppRequest {
 
     public String getClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1);
+    }
+
+    public String getPkgAsFolder() {
+        String separator = FileSystems.getDefault().getSeparator();
+        return pkg.replaceAll("\\.", separator);
     }
 
 }

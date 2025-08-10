@@ -17,6 +17,13 @@ public class GenerateService {
         //noinspection StringBufferReplaceableByString
         StringBuilder sb = new StringBuilder();
 
+        // filename
+        sb.append("//file: src/main/java/");
+        sb.append(appRequest.getPkgAsFolder());
+        sb.append("/entity/");
+        sb.append(appRequest.getClassName());
+        sb.append(".java\n\n");
+
         // package
         sb.append("package ");
         sb.append(appRequest.getPkg());

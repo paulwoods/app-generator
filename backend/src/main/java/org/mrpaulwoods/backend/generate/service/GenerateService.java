@@ -1,6 +1,5 @@
 package org.mrpaulwoods.backend.generate.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
@@ -16,7 +15,7 @@ public class GenerateService {
 
     private final List<Technology> technologies;
 
-    public String generate(@Valid AppRequest appRequest) {
+    public String generate(AppRequest appRequest) {
         log.debug("generate: {}", appRequest);
 
         StringBuilder sb = new StringBuilder();

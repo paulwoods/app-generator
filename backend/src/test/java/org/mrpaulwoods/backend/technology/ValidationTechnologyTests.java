@@ -1,6 +1,7 @@
 package org.mrpaulwoods.backend.technology;
 
 import org.junit.jupiter.api.Test;
+import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 
@@ -25,7 +26,7 @@ class ValidationTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertFalse(sb.isEmpty());
     }
@@ -41,7 +42,7 @@ class ValidationTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertFalse(sb.isEmpty());
     }
@@ -58,7 +59,7 @@ class ValidationTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertFalse(sb.isEmpty());
     }
@@ -73,7 +74,7 @@ class ValidationTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertTrue(sb.isEmpty());
     }
@@ -86,7 +87,7 @@ class ValidationTechnologyTests {
                 .minSize(1)
                 .build();
 
-        technology.fieldAnnotationCodeBlock(appRequest, field, sb);
+        technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, sb);
 
         assertEquals("\t@Size(min = 1);\n", sb.toString());
     }
@@ -99,7 +100,7 @@ class ValidationTechnologyTests {
                 .maxSize(1)
                 .build();
 
-        technology.fieldAnnotationCodeBlock(appRequest, field, sb);
+        technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, sb);
 
         assertEquals("\t@Size(max = 1);\n", sb.toString());
     }
@@ -113,7 +114,7 @@ class ValidationTechnologyTests {
                 .maxSize(2)
                 .build();
 
-        technology.fieldAnnotationCodeBlock(appRequest, field, sb);
+        technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, sb);
 
         assertEquals("\t@Size(min = 1, max = 2);\n", sb.toString());
     }
@@ -125,7 +126,7 @@ class ValidationTechnologyTests {
                 .type("String")
                 .build();
 
-        technology.fieldAnnotationCodeBlock(appRequest, field, sb);
+        technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, sb);
 
         assertEquals(0, sb.toString().length());
     }

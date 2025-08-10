@@ -1,5 +1,6 @@
 package org.mrpaulwoods.backend.technology;
 
+import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
 public final class UUIDTechnology implements Technology {
 
     @Override
-    public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {
+    public void importCodeBlock(AppRequest appRequest, FileBuilderType type, StringBuilder sb) {
 
         if (appRequest.getFields().stream().anyMatch(f ->
                 equalsIgnoreCase(f.getType(), "UUID") || endsWithIgnoreCase(f.getType(), ".UUID"))) {

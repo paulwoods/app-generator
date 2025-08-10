@@ -1,5 +1,6 @@
 package org.mrpaulwoods.backend.technology;
 
+import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 public final class ValidationTechnology implements Technology {
 
     @Override
-    public void importCodeBlock(AppRequest appRequest, StringBuilder sb) {
+    public void importCodeBlock(AppRequest appRequest, FileBuilderType type, StringBuilder sb) {
 
         if (appRequest.getFields().stream().anyMatch(f -> f.getMinSize() != null || f.getMaxSize() != null)) {
             sb.append("import jakarta.validation.constraints.Size;\n");
@@ -16,7 +17,7 @@ public final class ValidationTechnology implements Technology {
     }
 
     @Override
-    public void fieldAnnotationCodeBlock(AppRequest appRequest, Field field, StringBuilder sb) {
+    public void fieldAnnotationCodeBlock(AppRequest appRequest, FileBuilderType type, Field field, StringBuilder sb) {
 
         if (field.getMinSize() == null && field.getMaxSize() == null) {
             return;

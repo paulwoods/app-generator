@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.mrpaulwoods.backend.export.FileBuilderType.DTO;
+
 @Component
 @RequiredArgsConstructor
 @Order(FileBuilder.DTO_ORDER)
@@ -31,11 +33,11 @@ public final class DtoFileBuilder implements FileBuilder {
         sb.append(".dto;\n\n");
 
         // imports
-        technologies.forEach(t -> t.importCodeBlock(appRequest, sb));
+        technologies.forEach(t -> t.importCodeBlock(appRequest, DTO, sb));
         sb.append("\n");
 
         // annotations
-        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, sb));
+        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, DTO, sb));
 
         // class
         sb.append("public class ");
@@ -46,7 +48,7 @@ public final class DtoFileBuilder implements FileBuilder {
         appRequest.getFields().forEach(field -> {
 
             // annotations
-            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, field, sb));
+            technologies.forEach(t -> t.fieldAnnotationCodeBlock(appRequest, DTO, field, sb));
 
             // field
             sb.append("\tprivate ");

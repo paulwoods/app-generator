@@ -1,6 +1,7 @@
 package org.mrpaulwoods.backend.technology;
 
 import org.junit.jupiter.api.Test;
+import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 
@@ -24,7 +25,7 @@ class SpringDataTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, sb);
 
         assertFalse(sb.isEmpty());
     }
@@ -37,7 +38,7 @@ class SpringDataTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.ENTITY, sb);
 
         assertTrue(sb.isEmpty());
     }

@@ -1,6 +1,7 @@
 package org.mrpaulwoods.backend.technology;
 
 import org.junit.jupiter.api.Test;
+import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 
@@ -25,7 +26,7 @@ class UUIDTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertFalse(sb.isEmpty());
     }
@@ -40,7 +41,7 @@ class UUIDTechnologyTests {
         appRequest.setFields(new ArrayList<>());
         appRequest.getFields().add(field);
 
-        technology.importCodeBlock(appRequest, sb);
+        technology.importCodeBlock(appRequest, FileBuilderType.DTO, sb);
 
         assertTrue(sb.isEmpty());
     }

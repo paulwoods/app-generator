@@ -12,6 +12,10 @@ public final class ValidationTechnology implements Technology {
     @Override
     public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
 
+        if (type != FileBuilderType.DTO) {
+            return;
+        }
+
         if (appRequest.getFields().stream().anyMatch(f -> f.getMinSize() != null || f.getMaxSize() != null)) {
             code.append("import jakarta.validation.constraints.Size;\n");
         }
@@ -19,6 +23,10 @@ public final class ValidationTechnology implements Technology {
 
     @Override
     public void fieldAnnotationCodeBlock(AppRequest appRequest, FileBuilderType type, Field field, Code code) {
+
+        if (type != FileBuilderType.DTO) {
+            return;
+        }
 
         if (field.getMinSize() == null && field.getMaxSize() == null) {
             return;
@@ -39,7 +47,7 @@ public final class ValidationTechnology implements Technology {
             code.append(field.getMaxSize());
         }
 
-        code.append(");\n");
+        code.append(")\n");
     }
 
 }

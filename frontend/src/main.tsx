@@ -1,7 +1,7 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter, Route, Routes} from "react-router";
-import {HomeIndexPage} from "./home/HomeIndexPage.tsx";
+import {HomeIndexPage} from "./home/pages/HomeIndexPage.tsx";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 
 const darkTheme = createTheme({

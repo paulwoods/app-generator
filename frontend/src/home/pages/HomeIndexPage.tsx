@@ -1,7 +1,12 @@
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import {AppRequestForm} from "../components/AppRequestForm.tsx";
 
 export const HomeIndexPage = () => {
+
+    const handleGenerate = () => {
+
+    };
 
     return <Box sx={{flexGrow: 1}}>
         <AppBar position="static" enableColorOnDark>
@@ -21,6 +26,16 @@ export const HomeIndexPage = () => {
                 <Button color="inherit">Login</Button>
             </Toolbar>
         </AppBar>
+
+        <Box sx={{ml: 3, width: "25vw"}}>
+            <Box>
+                <h1>Form</h1>
+            </Box>
+
+            <AppRequestForm storage="home.request-form" onGenerate={handleGenerate}/>
+
+        </Box>
+
     </Box>
 
 }

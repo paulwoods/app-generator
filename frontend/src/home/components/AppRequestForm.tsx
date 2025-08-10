@@ -18,12 +18,18 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
                 {
                     name: "name",
                     type: "String",
-                    id: false
+                    id: false,
+                    minSize: null,
+                    maxSize: null,
+                    nullable: false
                 },
                 {
                     name: "email",
                     type: "String",
-                    id: false
+                    id: false,
+                    minSize: null,
+                    maxSize: null,
+                    nullable: false
                 }
             ]
         }
@@ -41,7 +47,14 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
 
     const handleAddField = () => {
         setAppRequest(produce(appRequest, draft => {
-            draft.fields = [...draft.fields, {name: "", type: "", id: false}];
+            draft.fields = [...draft.fields, {
+                name: "",
+                type: "",
+                id: false,
+                maxSize: null,
+                minSize: null,
+                nullable: false
+            }];
         }));
     };
 

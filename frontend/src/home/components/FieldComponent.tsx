@@ -74,13 +74,22 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
 
         <TableRow>
             <TableCell sx={sx1}>&nbsp;</TableCell>
+
             <TableCell sx={sx1} colSpan={5}>
+
                 <FormGroup>
                     <FormControlLabel control={<Checkbox
                         checked={field.id}
                         onChange={e => onUpdate({...field, id: e.target.checked})}
                     />} label="@Id"/>
+
+                    <FormControlLabel control={<Checkbox
+                        checked={field.nullable}
+                        onChange={e => onUpdate({...field, nullable: e.target.checked})}
+                    />} label="Nullable"/>
+
                 </FormGroup>
+
             </TableCell>
         </TableRow>
 

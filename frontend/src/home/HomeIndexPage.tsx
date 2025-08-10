@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 export const HomeIndexPage = () => {
 
     return <Box sx={{flexGrow: 1}}>
-        <AppBar position="static">
+        <AppBar position="static" enableColorOnDark>
             <Toolbar>
                 <IconButton
                     size="large"

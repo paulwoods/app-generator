@@ -25,7 +25,9 @@ public class FileBuilderUtil {
     public static void appendPackage(String entity, AppRequest appRequest, Code code) {
         code.append("package ");
         code.append(appRequest.getPkg());
-        code.append(".entity;\n\n");
+        code.append(".");
+        code.append(entity);
+        code.append(";\n\n");
     }
 
 }

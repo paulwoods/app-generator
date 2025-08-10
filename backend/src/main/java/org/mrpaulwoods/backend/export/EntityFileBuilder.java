@@ -28,8 +28,7 @@ public final class EntityFileBuilder implements FileBuilder {
         FileBuilderUtil.appendPackage("entity", appRequest, code);
 
         // imports
-        technologies.forEach(t -> t.importCodeBlock(appRequest, ENTITY, code));
-        code.append("\n");
+        FileBuilderUtil.appendImports(technologies, ENTITY, appRequest, code);
 
         // annotations
         technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, ENTITY, code));

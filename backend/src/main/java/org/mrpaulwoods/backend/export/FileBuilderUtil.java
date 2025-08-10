@@ -2,6 +2,7 @@ package org.mrpaulwoods.backend.export;
 
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.technology.Technology;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public class FileBuilderUtil {
         code.append(".");
         code.append(entity);
         code.append(";\n\n");
+    }
+
+    public static void appendImports(List<Technology> technologies, FileBuilderType type, AppRequest appRequest, Code code) {
+        technologies.forEach(t -> t.importCodeBlock(appRequest, type, code));
+        code.append("\n");
     }
 
 }

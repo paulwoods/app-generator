@@ -1,10 +1,12 @@
 package org.mrpaulwoods.backend.generate.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.nio.file.FileSystems;
+import java.util.List;
 
 @Data
 public class AppRequest {
@@ -16,6 +18,9 @@ public class AppRequest {
     @NotBlank
     @Size(min = 2, message = "Pkg must be at least 2 characters long")
     private String pkg;
+
+    @NotNull
+    private List<Field> fields;
 
     public String getClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1);

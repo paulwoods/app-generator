@@ -90,7 +90,7 @@ class ValidationTechnologyTests {
 
         technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, code);
 
-        assertEquals("\t@Size(min = 1);\n", code.getContentAsString());
+        assertEquals("\t@Size(min = 1)\n", code.getContentAsString());
     }
 
     @Test
@@ -103,7 +103,7 @@ class ValidationTechnologyTests {
 
         technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, code);
 
-        assertEquals("\t@Size(max = 1);\n", code.getContentAsString());
+        assertEquals("\t@Size(max = 1)\n", code.getContentAsString());
     }
 
     @Test
@@ -117,7 +117,7 @@ class ValidationTechnologyTests {
 
         technology.fieldAnnotationCodeBlock(appRequest, FileBuilderType.DTO, field, code);
 
-        assertEquals("\t@Size(min = 1, max = 2);\n", code.getContentAsString());
+        assertEquals("\t@Size(min = 1, max = 2)\n", code.getContentAsString());
     }
 
     @Test

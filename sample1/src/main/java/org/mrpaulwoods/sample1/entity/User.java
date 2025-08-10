@@ -1,9 +1,9 @@
 package org.mrpaulwoods.sample1.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

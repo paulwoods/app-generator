@@ -3,13 +3,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {AppRequestForm} from "../components/AppRequestForm.tsx";
 import axios from "axios";
 import type {AppRequest} from "../../types.ts";
+import {useState} from "react";
 
 export const HomeIndexPage = () => {
+
+    const [results, setResults] = useState<string>("");
 
     const handleGenerate = (appRequest: AppRequest) => {
         axios.post("/backend/v1/generate", appRequest)
             .then(response => response.data)
-            .then(console.log)
+            .then(setResults)
             .catch(console.error)
     };
 
@@ -39,6 +42,12 @@ export const HomeIndexPage = () => {
 
             <AppRequestForm storage="home.request-form" onGenerate={handleGenerate}/>
 
+        </Box>
+
+        <hr/>
+
+        <Box>
+            <pre>{results}</pre>
         </Box>
 
     </Box>

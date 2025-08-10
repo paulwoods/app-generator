@@ -22,11 +22,7 @@ public final class EntityFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-        code.append("//file: src/main/java/");
-        code.append(appRequest.getPkgAsFolder());
-        code.append("/entity/");
-        code.append(appRequest.getClassName());
-        code.append(".java\n\n");
+        FileBuilderUtil.buildFileName("src", "entity", "", appRequest, code);
 
         // package
         code.append("package ");

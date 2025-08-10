@@ -22,12 +22,7 @@ public final class DtoFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-
-        code.append("//file: src/main/java/");
-        code.append(appRequest.getPkgAsFolder());
-        code.append("/dto/");
-        code.append(appRequest.getClassName());
-        code.append("Dto.java\n\n");
+        FileBuilderUtil.buildFileName("src", "dto", "Dto", appRequest, code);
 
         // package
         code.append("package ");

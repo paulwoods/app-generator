@@ -1,11 +1,16 @@
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppRequestForm} from "../components/AppRequestForm.tsx";
+import axios from "axios";
+import type {AppRequest} from "../../types.ts";
 
 export const HomeIndexPage = () => {
 
-    const handleGenerate = () => {
-
+    const handleGenerate = (appRequest: AppRequest) => {
+        axios.post("/backend/v1/generate", appRequest)
+            .then(response => response.data)
+            .then(console.log)
+            .catch(console.error)
     };
 
     return <Box sx={{flexGrow: 1}}>

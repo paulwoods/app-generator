@@ -41,8 +41,8 @@ public final class EntityFileBuilder implements FileBuilder {
         sb.append(" {\n\n");
 
         // id
-        sb.append("\t@Id\n");
-        sb.append("\tprivate UUID id;\n\n");
+//        sb.append("\t@Id\n");
+//        sb.append("\tprivate UUID id;\n\n");
 
         // fields
         appRequest.getFields().forEach(field -> {

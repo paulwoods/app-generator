@@ -16,8 +16,14 @@ class ValidationTechnologyTests {
 
     @Test
     void importCodeBlock_import_added_min() {
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .minSize(1)
+                .build();
+
         appRequest.setFields(new ArrayList<>());
-        appRequest.getFields().add(new Field("name", "String", 1, null));
+        appRequest.getFields().add(field);
 
         technology.importCodeBlock(appRequest, sb);
 
@@ -26,8 +32,14 @@ class ValidationTechnologyTests {
 
     @Test
     void importCodeBlock_import_added_max() {
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .maxSize(1)
+                .build();
+
         appRequest.setFields(new ArrayList<>());
-        appRequest.getFields().add(new Field("name", "String", null, 1));
+        appRequest.getFields().add(field);
 
         technology.importCodeBlock(appRequest, sb);
 
@@ -36,8 +48,15 @@ class ValidationTechnologyTests {
 
     @Test
     void importCodeBlock_import_added_min_and_max() {
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .maxSize(1)
+                .maxSize(2)
+                .build();
+
         appRequest.setFields(new ArrayList<>());
-        appRequest.getFields().add(new Field("name", "String", 1, 2));
+        appRequest.getFields().add(field);
 
         technology.importCodeBlock(appRequest, sb);
 
@@ -46,8 +65,13 @@ class ValidationTechnologyTests {
 
     @Test
     void importCodeBlock_import_not_added() {
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .build();
+
         appRequest.setFields(new ArrayList<>());
-        appRequest.getFields().add(new Field("name", "String", null, null));
+        appRequest.getFields().add(field);
 
         technology.importCodeBlock(appRequest, sb);
 
@@ -56,7 +80,11 @@ class ValidationTechnologyTests {
 
     @Test
     void fieldAnnotationCodeBlock_annotation_added_min() {
-        Field field = new Field("name", "String", 1, null);
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .minSize(1)
+                .build();
 
         technology.fieldAnnotationCodeBlock(appRequest, field, sb);
 
@@ -65,7 +93,11 @@ class ValidationTechnologyTests {
 
     @Test
     void fieldAnnotationCodeBlock_annotation_added_max() {
-        Field field = new Field("name", "String", null, 1);
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .maxSize(1)
+                .build();
 
         technology.fieldAnnotationCodeBlock(appRequest, field, sb);
 
@@ -74,7 +106,12 @@ class ValidationTechnologyTests {
 
     @Test
     void fieldAnnotationCodeBlock_annotation_added_min_and_max() {
-        Field field = new Field("name", "String", 1, 2);
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .minSize(1)
+                .maxSize(2)
+                .build();
 
         technology.fieldAnnotationCodeBlock(appRequest, field, sb);
 
@@ -83,7 +120,10 @@ class ValidationTechnologyTests {
 
     @Test
     void fieldAnnotationCodeBlock_annotation_not_added() {
-        Field field = new Field("name", "String", null, null);
+        Field field = Field.builder()
+                .name("name")
+                .type("String")
+                .build();
 
         technology.fieldAnnotationCodeBlock(appRequest, field, sb);
 

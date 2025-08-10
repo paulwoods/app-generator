@@ -1,5 +1,5 @@
 import {useLocalStorage} from "usehooks-ts";
-import type {AppRequest} from "../../types.ts";
+import type {AppRequest, Field} from "../../types.ts";
 import {Box, Button, Paper, TextField, Typography} from "@mui/material";
 import {produce} from "immer";
 import {FieldsComponent} from "./FieldsComponent.tsx";
@@ -18,10 +18,12 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
                 {
                     name: "name",
                     type: "String",
+                    id: false
                 },
                 {
                     name: "email",
                     type: "String",
+                    id: false
                 }
             ]
         }
@@ -31,23 +33,15 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         onGenerate(appRequest);
     };
 
-    const updateField = (fieldName: string, index: number, value: string) => {
+    const updateField = (newField: Field, index: number) => {
         setAppRequest(produce(appRequest, draft => {
-            if (fieldName == "name") {
-                draft.fields[index].name = value;
-            } else if (fieldName == "type") {
-                draft.fields[index].type = value;
-            } else if (fieldName == "minSize") {
-                draft.fields[index].minSize = parseInt(value, 10);
-            } else if (fieldName == "maxSize") {
-                draft.fields[index].maxSize = parseInt(value, 10);
-            }
+            draft.fields[index] = newField;
         }));
     };
 
     const handleAddField = () => {
         setAppRequest(produce(appRequest, draft => {
-            draft.fields = [...draft.fields, {name: "", type: ""}];
+            draft.fields = [...draft.fields, {name: "", type: "", id: false}];
         }));
     };
 

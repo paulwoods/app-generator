@@ -9,17 +9,16 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class UUIDTechnologyTests {
+class SpringDataTechnologyTests {
 
     StringBuilder sb = new StringBuilder();
     AppRequest appRequest = new AppRequest();
-    UUIDTechnology technology = new UUIDTechnology();
+    SpringDataTechnology technology = new SpringDataTechnology();
 
     @Test
     void importCodeBlock_adds_imports() {
         Field field = Field.builder()
-                .name("name")
-                .type("UUID")
+                .id(true)
                 .build();
 
         appRequest.setFields(new ArrayList<>());
@@ -31,10 +30,8 @@ class UUIDTechnologyTests {
     }
 
     @Test
-    void importCodeBlock_doesnt_add_if_no_UUID_field() {
+    void importCodeBlock_doesnt_add_imports() {
         Field field = Field.builder()
-                .name("name")
-                .type("Long")
                 .build();
 
         appRequest.setFields(new ArrayList<>());

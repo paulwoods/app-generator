@@ -1,6 +1,7 @@
 package org.mrpaulwoods.backend.export;
 
 import lombok.RequiredArgsConstructor;
+import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.springframework.core.annotation.Order;
@@ -18,9 +19,11 @@ public final class DtoFileBuilder implements FileBuilder {
     private final List<Technology> technologies;
 
     @Override
-    public void build(AppRequest appRequest, StringBuilder sb) {
+    public void build(AppRequest appRequest, Code code) {
+        StringBuilder sb = code.getContent();
 
         // filename
+
         sb.append("//file: src/main/java/");
         sb.append(appRequest.getPkgAsFolder());
         sb.append("/dto/");

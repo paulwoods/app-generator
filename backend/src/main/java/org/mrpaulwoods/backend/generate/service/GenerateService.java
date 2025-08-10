@@ -2,6 +2,7 @@ package org.mrpaulwoods.backend.generate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.export.FileBuilder;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,20 @@ public class GenerateService {
     public String generate(AppRequest appRequest) {
         log.debug("generate: {}", appRequest);
 
+        List<Code> codes = fileBuilders.stream()
+                .map(builder -> new BuilderCodePair(builder, new Code()))
+                .peek(pair -> pair.builder().build(appRequest, pair.code()))
+                .map(BuilderCodePair::code)
+                .toList();
+
+
         StringBuilder sb = new StringBuilder();
-        fileBuilders.forEach(builder -> builder.build(appRequest, sb));
+        codes.forEach(c -> sb.append(c.getContent().toString()));
         return sb.toString();
     }
 
+    record BuilderCodePair(FileBuilder builder, Code code) {
+    }
 }
+
+// builder.build(appRequest, sb)

@@ -28,7 +28,9 @@ public class GenerateService {
 
         StringBuilder sb = new StringBuilder();
         codes.forEach(c -> {
-            sb.append("//file: " + c.getFileName() + "\n\n");
+            sb.append("//file: ");
+            sb.append(c.getFileName());
+            sb.append("\n\n");
             sb.append(c.getContent().toString());
         });
         return sb.toString();

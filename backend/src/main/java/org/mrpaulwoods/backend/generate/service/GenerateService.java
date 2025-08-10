@@ -19,7 +19,6 @@ public class GenerateService {
     public String generate(@Valid AppRequest appRequest) {
         log.debug("generate: {}", appRequest);
 
-        //noinspection StringBufferReplaceableByString
         StringBuilder sb = new StringBuilder();
 
         // filename
@@ -39,10 +38,7 @@ public class GenerateService {
         sb.append("\n");
 
         // annotations
-        sb.append("@Data\n");
-        sb.append("@Builder\n");
-        sb.append("@NoArgsConstructor\n");
-        sb.append("@AllArgsConstructor\n");
+        technologies.forEach(t -> t.addClassAnnotations(appRequest, sb));
 
         // class
         sb.append("public class ");
@@ -54,34 +50,16 @@ public class GenerateService {
         sb.append("\tprivate UUID id;\n\n");
 
         // fields
-        appRequest.getFields().forEach(f -> {
+        appRequest.getFields().forEach(field -> {
 
-            // annotation
-            if (f.getMinSize() != null || f.getMaxSize() != null) {
-
-                sb.append("\t@Size(");
-
-                if (f.getMinSize() != null) {
-                    sb.append("min = ");
-                    sb.append(f.getMinSize());
-                    if (f.getMaxSize() != null) {
-                        sb.append(", ");
-                    }
-                }
-
-                if (f.getMaxSize() != null) {
-                    sb.append("max = ");
-                    sb.append(f.getMaxSize());
-                }
-
-                sb.append(");\n");
-            }
+            // annotations
+            technologies.forEach(t -> t.addFieldAnnotation(appRequest, field, sb));
 
             // field
             sb.append("\tprivate ");
-            sb.append(f.getType());
+            sb.append(field.getType());
             sb.append(" ");
-            sb.append(f.getName());
+            sb.append(field.getName());
             sb.append(";\n\n");
 
         });

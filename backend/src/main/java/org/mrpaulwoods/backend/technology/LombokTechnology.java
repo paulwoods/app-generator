@@ -11,4 +11,12 @@ public class LombokTechnology implements Technology {
         sb.append("import lombok.*;\n");
     }
 
+    @Override
+    public void addClassAnnotations(AppRequest appRequest, StringBuilder sb) {
+        sb.append("@Data\n");
+        sb.append("@Builder\n");
+        sb.append("@NoArgsConstructor\n");
+        sb.append("@AllArgsConstructor\n");
+    }
+
 }

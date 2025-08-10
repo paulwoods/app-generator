@@ -12,8 +12,7 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
     const [appRequest, setAppRequest] = useLocalStorage<AppRequest>(storage,
         {
             entity: '',
-            pkg: '',
-            fields: ''
+            pkg: ''
         }
     )
 
@@ -21,7 +20,7 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         onGenerate(appRequest);
     };
 
-    const canGenerate = appRequest.entity && appRequest.pkg && appRequest.fields;
+    const canGenerate = appRequest.entity && appRequest.pkg;
 
     return <Box sx={{display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3, width: "100%"}}>
 
@@ -39,16 +38,6 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
             label="Package"
             value={appRequest.pkg}
             onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
-        />
-
-        <TextField
-            size="small"
-            multiline
-            minRows={4}
-            fullWidth
-            label="Additional Fields"
-            value={appRequest.fields}
-            onChange={(e) => setAppRequest({...appRequest, fields: e.target.value})}
         />
 
         <Button size="small" variant="contained" onClick={handleGenerate} disabled={!canGenerate}>Generate</Button>

@@ -15,10 +15,6 @@ public class AppRequest {
     @Size(min = 2, message = "Pkg must be at least 2 characters long")
     private String pkg;
 
-    @NotBlank
-    @Size(min = 2, message = "Fields must be at least 2 characters long")
-    private String fields;
-
     public String getClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1);
     }

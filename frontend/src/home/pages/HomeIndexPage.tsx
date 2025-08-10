@@ -46,7 +46,7 @@ export const HomeIndexPage = () => {
 
         <hr/>
 
-        <Box>
+        <Box sx={{ml: 3}}>
             <pre>{results}</pre>
         </Box>
 

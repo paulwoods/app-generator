@@ -1,27 +1,13 @@
 import {useLocalStorage} from "usehooks-ts";
 import type {AppRequest} from "../../types.ts";
-import {
-    Box,
-    Button,
-    IconButton,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Box, Button, Paper, TextField, Typography} from "@mui/material";
 import {produce} from "immer";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-
+import {FieldsComponent} from "./FieldsComponent.tsx";
 
 type AppRequestFormProps = {
     storage: string
     onGenerate: (appRequest: AppRequest) => void
 }
-
 export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
 
     const [appRequest, setAppRequest] = useLocalStorage<AppRequest>(storage,
@@ -45,12 +31,6 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         onGenerate(appRequest);
     };
 
-    let canGenerate = appRequest.entity && appRequest.pkg;
-    appRequest.fields.forEach(field => {
-        canGenerate = canGenerate && field.name && field.type;
-    });
-
-
     const updateField = (fieldName: string, index: number, value: string) => {
         setAppRequest(produce(appRequest, draft => {
             if (fieldName == "name") {
@@ -65,17 +45,22 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         }));
     };
 
-    const handleAdd = () => {
+    const handleAddField = () => {
         setAppRequest(produce(appRequest, draft => {
             draft.fields = [...draft.fields, {name: "", type: ""}];
         }));
     };
 
-    const handleRemove = (index: number) => {
+    const handleRemoveField = (index: number) => {
         setAppRequest(produce(appRequest, draft => {
             draft.fields.splice(index, 1);
         }));
     };
+
+    let canGenerate = appRequest.entity && appRequest.pkg;
+    appRequest.fields.forEach(field => {
+        canGenerate = canGenerate && field.name && field.type;
+    });
 
     return <Paper sx={{p: 3, mt: 3, mb: 3}}>
 
@@ -103,68 +88,12 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
                 onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
             />
 
-            <Typography sx={{m: 0, p: 0}}>Fields</Typography>
-
-            <Table size="small">
-                <TableBody>
-                    {appRequest.fields?.map((field, index) =>
-                        <TableRow key={index}>
-                            <TableCell sx={{p: 0, border: 0}}>
-                                <IconButton onClick={() => handleRemove(index)}><RemoveCircleOutlineIcon/></IconButton>
-                            </TableCell>
-                            <TableCell sx={{p: 0, border: 0}}>
-                                <TextField
-                                    size="small"
-                                    fullWidth
-                                    label="name"
-                                    required
-                                    slotProps={{inputLabel: {shrink: true}}}
-                                    value={field.name}
-                                    onChange={(e) => updateField("name", index, e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell sx={{border: 0}}>
-                                <TextField
-                                    size="small"
-                                    fullWidth
-                                    label="type"
-                                    required
-                                    slotProps={{inputLabel: {shrink: true}}}
-                                    value={field.type}
-                                    onChange={(e) => updateField("type", index, e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell sx={{border: 0}}>
-                                <TextField
-                                    size="small"
-                                    fullWidth
-                                    label="min size"
-                                    slotProps={{inputLabel: {shrink: true}}}
-                                    value={field.minSize || ""}
-                                    onChange={(e) => updateField("minSize", index, e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell sx={{border: 0}}>
-                                <TextField
-                                    size="small"
-                                    fullWidth
-                                    label="max size"
-                                    slotProps={{inputLabel: {shrink: true}}}
-                                    value={field.maxSize || ""}
-                                    onChange={(e) => updateField("maxSize", index, e.target.value)}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    )}
-                    <TableRow>
-                        <TableCell sx={{p: 0, border: 0}}>
-                            <IconButton onClick={handleAdd}><AddCircleOutlineIcon/></IconButton>
-                        </TableCell>
-                    </TableRow>
-
-                </TableBody>
-
-            </Table>
+            <FieldsComponent
+                fields={appRequest.fields}
+                onRemove={handleRemoveField}
+                onUpdate={updateField}
+                onAdd={handleAddField}
+            />
 
             <Button size="small" variant="contained" onClick={handleGenerate} disabled={!canGenerate}>Generate</Button>
 

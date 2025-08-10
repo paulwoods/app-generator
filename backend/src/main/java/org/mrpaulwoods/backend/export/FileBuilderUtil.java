@@ -60,4 +60,8 @@ public class FileBuilderUtil {
         code.append(";\n\n");
     }
 
+    public static void appendClassEnd(Code code) {
+        code.append("}\n");
+    }
+
 }

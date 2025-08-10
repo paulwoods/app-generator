@@ -48,8 +48,7 @@ public final class DtoFileBuilder implements FileBuilder {
         });
 
         // end class
-        code.append("}\n");
-
+        FileBuilderUtil.appendClassEnd(code);
     }
 
 }

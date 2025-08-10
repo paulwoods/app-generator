@@ -48,7 +48,7 @@ public final class EntityFileBuilder implements FileBuilder {
         });
 
         // end class
-        code.append("}\n");
+        FileBuilderUtil.appendClassEnd(code);
     }
 
 }

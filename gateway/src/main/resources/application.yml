@@ -1,9 +1,9 @@
 server:
   port: 8080
 
-logging:
-  level:
-    org.springframework.cloud.gateway: TRACE
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: TRACE
 
 spring:
   application:

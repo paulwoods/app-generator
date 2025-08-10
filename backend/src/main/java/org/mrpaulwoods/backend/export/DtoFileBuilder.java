@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.mrpaulwoods.backend.export.FileBuilderType.DTO;
+import static org.mrpaulwoods.backend.export.FileBuilderType.ENTITY;
 
 @Component
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public final class DtoFileBuilder implements FileBuilder {
         FileBuilderUtil.appendImports(technologies, DTO, appRequest, code);
 
         // annotations
-        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, DTO, code));
+        FileBuilderUtil.appendClassAnnotations(technologies, ENTITY, appRequest, code);
 
         // class
         code.append("public class ");

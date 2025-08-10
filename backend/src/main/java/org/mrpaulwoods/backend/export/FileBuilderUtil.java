@@ -36,4 +36,7 @@ public class FileBuilderUtil {
         code.append("\n");
     }
 
+    public static void appendClassAnnotations(List<Technology> technologies, FileBuilderType type, AppRequest appRequest, Code code) {
+        technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, type, code));
+    }
 }

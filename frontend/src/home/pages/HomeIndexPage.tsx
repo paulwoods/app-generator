@@ -35,13 +35,8 @@ export const HomeIndexPage = () => {
             </Toolbar>
         </AppBar>
 
-        <Box sx={{ml: 3, width: "25vw"}}>
-            <Box>
-                <h1>Form</h1>
-            </Box>
-
+        <Box sx={{p: 4, width: "100%"}}>
             <AppRequestForm storage="home.request-form" onGenerate={handleGenerate}/>
-
         </Box>
 
         <hr/>

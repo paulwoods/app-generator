@@ -30,7 +30,7 @@ public final class EntityFileBuilder implements FileBuilder {
         // imports
         FileBuilderUtil.appendImports(technologies, ENTITY, appRequest, code);
 
-        // annotations
+        // class annotations
         FileBuilderUtil.appendClassAnnotations(technologies, ENTITY, appRequest, code);
 
         // class
@@ -39,7 +39,7 @@ public final class EntityFileBuilder implements FileBuilder {
         // fields
         appRequest.getFields().forEach(field -> {
 
-            // annotations
+            // field annotations
             FileBuilderUtil.appendFieldAnnotations(technologies, ENTITY, appRequest, field, code);
 
             // field

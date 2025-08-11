@@ -30,7 +30,7 @@ public final class DtoFileBuilder implements FileBuilder {
         // imports
         FileBuilderUtil.appendImports(technologies, DTO, appRequest, code);
 
-        // annotations
+        // class annotations
         FileBuilderUtil.appendClassAnnotations(technologies, DTO, appRequest, code);
 
         // class
@@ -39,7 +39,7 @@ public final class DtoFileBuilder implements FileBuilder {
         // fields
         appRequest.getFields().forEach(field -> {
 
-            // annotations
+            // field annotations
             FileBuilderUtil.appendFieldAnnotations(technologies, DTO, appRequest, field, code);
 
             // field

@@ -17,10 +17,10 @@ public class UserDto {
     private UUID id;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 100, message = "First name must be less than 100 characters")
     private String firstName;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 100, message = "Last name must be less than 100 characters")
     private String lastName;
 }

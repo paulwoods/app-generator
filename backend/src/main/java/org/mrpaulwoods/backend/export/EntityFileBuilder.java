@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.mrpaulwoods.backend.export.FileBuilderType.ENTITY;
+import static org.mrpaulwoods.backend.utils.Constants.ENTITY_OBJECT;
+import static org.mrpaulwoods.backend.utils.Constants.SOURCE_FOLDER;
 
 @Component
 @RequiredArgsConstructor
@@ -22,10 +24,10 @@ public final class EntityFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-        FileBuilderUtil.buildFileName("src", "entity", "", appRequest, code);
+        FileBuilderUtil.buildFileName(SOURCE_FOLDER, ENTITY_OBJECT, appRequest.getEntityClassName(), "", appRequest, code);
 
         // package
-        FileBuilderUtil.appendPackage("entity", appRequest, code);
+        FileBuilderUtil.appendPackage(ENTITY_OBJECT, appRequest, code);
 
         // imports
         FileBuilderUtil.appendImports(technologies, ENTITY, appRequest, code);
@@ -34,7 +36,7 @@ public final class EntityFileBuilder implements FileBuilder {
         FileBuilderUtil.appendClassAnnotations(technologies, ENTITY, appRequest, code);
 
         // class
-        FileBuilderUtil.appendClass("", appRequest, code);
+        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "", appRequest, code);
 
         // fields
         appRequest.getFields().forEach(field -> {

@@ -4,9 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.mrpaulwoods.backend.utils.Constants;
 
 import java.nio.file.FileSystems;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Data
 @Builder
@@ -26,13 +28,21 @@ public class AppRequest {
     @Singular
     private List<Field> fields;
 
-    public String getClassName() {
-        return entity.substring(0, 1).toUpperCase() + entity.substring(1);
-    }
-
     public String getPkgAsFolder() {
         String separator = FileSystems.getDefault().getSeparator();
         return pkg.replaceAll("\\.", separator);
+    }
+
+    public String getEntityClassName() {
+        return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
+    }
+
+    public String getDtoClassName() {
+        return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.DTO_SUFFIX;
+    }
+
+    public Stream<Field> stream() {
+        return fields.stream();
     }
 
 }

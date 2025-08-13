@@ -34,6 +34,7 @@ public class BackendApplicationTests {
             	private String name;
             
             }
+            
             //file: src/main/java/org/mrpaulwoods/application/dto/UserDto.java
             
             package org.mrpaulwoods.application.dto;
@@ -54,6 +55,46 @@ public class BackendApplicationTests {
             	private String name;
             
             }
+            
+            //file: src/src/java/org/mrpaulwoods/application/mapper/UserMapper.java
+            
+            package org.mrpaulwoods.application.mapper;
+            
+            import org.mrpaulwoods.application.dto.UserDto;
+            import org.mrpaulwoods.application.entity.User;
+            
+            public class UserMapper {
+            
+            	public static UserDto toDto(User entity) {
+            		if (entity == null) {
+            			return null;
+            		}
+            		return UserDto.builder()
+            			.id(entity.getId())
+            			.name(entity.getName())
+            			.build();
+            	}
+            
+            	public static User toEntity(UserDto dto) {
+            		if (dto == null) {
+            			return null;
+            		}
+            		return User.builder()
+            			.id(dto.getId())
+            			.name(dto.getName())
+            			.build();
+            	}
+            
+            	public static User update(UserDto dto, User entity) {
+            		if (dto == null || entity == null) {
+            			return null;
+            		}
+            		entity.setName(dto.getName());
+            		return entity;
+            	}
+            
+            }
+            
             """;
     WebClient webClient;
     @LocalServerPort

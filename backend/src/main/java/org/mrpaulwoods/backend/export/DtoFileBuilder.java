@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.mrpaulwoods.backend.export.FileBuilderType.DTO;
+import static org.mrpaulwoods.backend.utils.Constants.DTO_OBJECT;
+import static org.mrpaulwoods.backend.utils.Constants.SOURCE_FOLDER;
 
 @Component
 @RequiredArgsConstructor
@@ -22,10 +24,10 @@ public final class DtoFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-        FileBuilderUtil.buildFileName("src", "dto", "Dto", appRequest, code);
+        FileBuilderUtil.buildFileName(SOURCE_FOLDER, DTO_OBJECT, appRequest.getDtoClassName(), "", appRequest, code);
 
         // package
-        FileBuilderUtil.appendPackage("dto", appRequest, code);
+        FileBuilderUtil.appendPackage(DTO_OBJECT, appRequest, code);
 
         // imports
         FileBuilderUtil.appendImports(technologies, DTO, appRequest, code);
@@ -34,7 +36,7 @@ public final class DtoFileBuilder implements FileBuilder {
         FileBuilderUtil.appendClassAnnotations(technologies, DTO, appRequest, code);
 
         // class
-        FileBuilderUtil.appendClass("Dto", appRequest, code);
+        FileBuilderUtil.appendClass(appRequest.getDtoClassName(), "", appRequest, code);
 
         // fields
         appRequest.getFields().forEach(field -> {

@@ -10,15 +10,27 @@ public final class LombokTechnology implements Technology {
 
     @Override
     public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
-        code.append("import lombok.*;\n");
+        switch (type) {
+            case ENTITY, DTO -> {
+                code.append("import lombok.*;\n");
+            }
+            case MAPPER -> {
+            }
+        }
     }
 
     @Override
     public void classAnnotationsCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
-        code.append("@Data\n");
-        code.append("@Builder\n");
-        code.append("@NoArgsConstructor\n");
-        code.append("@AllArgsConstructor\n");
+        switch (type) {
+            case ENTITY, DTO -> {
+                code.append("@Data\n");
+                code.append("@Builder\n");
+                code.append("@NoArgsConstructor\n");
+                code.append("@AllArgsConstructor\n");
+            }
+            case MAPPER -> {
+            }
+        }
     }
 
 }

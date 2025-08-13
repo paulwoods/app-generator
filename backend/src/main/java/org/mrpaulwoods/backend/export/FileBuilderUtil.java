@@ -12,14 +12,14 @@ import java.util.List;
 
 public class FileBuilderUtil {
 
-    public static void buildFileName(String prefix, String stub, String suffix, AppRequest appRequest, Code code) {
+    public static void buildFileName(String folder, String stub, String name, String suffix, AppRequest appRequest, Code code) {
         List<String> elements = new ArrayList<>();
-        elements.add(prefix);
-        elements.add("main");
+        elements.add("src");
+        elements.add(folder);
         elements.add("java");
         elements.addAll(Arrays.asList(appRequest.getPkg().split("\\.")));
         elements.add(stub);
-        elements.add(appRequest.getClassName() + suffix + ".java");
+        elements.add(name + suffix + ".java");
         Path p = Path.of("", elements.toArray(new String[0]));
         code.setFileName(p.toString());
     }
@@ -41,9 +41,9 @@ public class FileBuilderUtil {
         technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, type, code));
     }
 
-    public static void appendClass(String suffix, AppRequest appRequest, Code code) {
+    public static void appendClass(String name, String suffix, AppRequest appRequest, Code code) {
         code.append("public class ");
-        code.append(appRequest.getClassName());
+        code.append(name);
         code.append(suffix);
         code.append(" {\n\n");
     }
@@ -61,7 +61,7 @@ public class FileBuilderUtil {
     }
 
     public static void appendClassEnd(Code code) {
-        code.append("}\n");
+        code.append("}\n\n");
     }
 
 }

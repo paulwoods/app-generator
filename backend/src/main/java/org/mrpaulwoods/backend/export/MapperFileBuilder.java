@@ -1,20 +1,13 @@
 package org.mrpaulwoods.backend.export;
 
-import lombok.RequiredArgsConstructor;
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
-import org.mrpaulwoods.backend.technology.Technology;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-@RequiredArgsConstructor
 @Order(FileBuilder.MAPPER_ORDER)
 public final class MapperFileBuilder implements FileBuilder {
-
-    private final List<Technology> technologies;
 
     @Override
     public void build(AppRequest appRequest, Code code) {
@@ -40,7 +33,7 @@ public final class MapperFileBuilder implements FileBuilder {
         // class annotations
 
         // class
-        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "Mapper", appRequest, code);
+        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "Mapper", code);
 
         // methods
         code.append("\tpublic static ");

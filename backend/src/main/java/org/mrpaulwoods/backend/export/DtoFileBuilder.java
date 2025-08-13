@@ -36,7 +36,7 @@ public final class DtoFileBuilder implements FileBuilder {
         FileBuilderUtil.appendClassAnnotations(technologies, DTO, appRequest, code);
 
         // class
-        FileBuilderUtil.appendClass(appRequest.getDtoClassName(), "", appRequest, code);
+        FileBuilderUtil.appendClass(appRequest.getDtoClassName(), "", code);
 
         // fields
         appRequest.getFields().forEach(field -> {

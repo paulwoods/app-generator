@@ -11,9 +11,7 @@ public final class LombokTechnology implements Technology {
     @Override
     public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
         switch (type) {
-            case ENTITY, DTO -> {
-                code.append("import lombok.*;\n");
-            }
+            case ENTITY, DTO -> code.append("import lombok.*;\n");
             case MAPPER -> {
             }
         }

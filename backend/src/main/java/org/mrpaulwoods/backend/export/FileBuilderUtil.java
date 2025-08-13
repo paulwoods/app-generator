@@ -41,7 +41,7 @@ public class FileBuilderUtil {
         technologies.forEach(t -> t.classAnnotationsCodeBlock(appRequest, type, code));
     }
 
-    public static void appendClass(String name, String suffix, AppRequest appRequest, Code code) {
+    public static void appendClass(String name, String suffix, Code code) {
         code.append("public class ");
         code.append(name);
         code.append(suffix);

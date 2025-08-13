@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.mrpaulwoods.backend.utils.Constants;
 
-import java.nio.file.FileSystems;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,11 +26,6 @@ public class AppRequest {
     @NotNull
     @Singular
     private List<Field> fields;
-
-    public String getPkgAsFolder() {
-        String separator = FileSystems.getDefault().getSeparator();
-        return pkg.replaceAll("\\.", separator);
-    }
 
     public String getEntityClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;

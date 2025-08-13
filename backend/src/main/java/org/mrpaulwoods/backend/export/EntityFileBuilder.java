@@ -36,7 +36,7 @@ public final class EntityFileBuilder implements FileBuilder {
         FileBuilderUtil.appendClassAnnotations(technologies, ENTITY, appRequest, code);
 
         // class
-        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "", appRequest, code);
+        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "", code);
 
         // fields
         appRequest.getFields().forEach(field -> {

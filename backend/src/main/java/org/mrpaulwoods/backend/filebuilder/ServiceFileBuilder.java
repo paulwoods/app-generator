@@ -83,7 +83,7 @@ public final class ServiceFileBuilder implements FileBuilder {
                 \t\t\t.map(%s::toEntity)
                 \t\t\t.flatMap(%s::save)
                 \t\t\t.map(%s::toDto);
-                \t\t}
+                \t}
                 
                 """.formatted(
                 appRequest.getDtoClassName(),

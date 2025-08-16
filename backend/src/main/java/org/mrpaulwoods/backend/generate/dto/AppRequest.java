@@ -47,10 +47,6 @@ public class AppRequest {
         return getEntityClassName() + Constants.MAPPER_SUFFIX;
     }
 
-    public String getMapperObjectName() {
-        return getEntityObjectName() + Constants.MAPPER_SUFFIX;
-    }
-
     public String getRepositoryClassName() {
         return getEntityClassName() + Constants.REPOSITORY_SUFFIX;
     }

@@ -4,5 +4,6 @@ public enum FileBuilderType {
     ENTITY,
     DTO,
     MAPPER,
-    REPOSITORY
+    REPOSITORY,
+    SERVICE
 }

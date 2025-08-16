@@ -7,4 +7,7 @@ public class Constants {
     public static final String ENTITY_OBJECT = "entity";
     public static final String DTO_SUFFIX = "Dto";
     public static final String DTO_OBJECT = "dto";
+    public static final String MAPPER_SUFFIX = "Mapper";
+    public static final String REPOSITORY_SUFFIX = "Repository";
+    public static final String SERVICE_SUFFIX = "Service";
 }

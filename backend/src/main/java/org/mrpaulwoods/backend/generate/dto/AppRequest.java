@@ -27,6 +27,10 @@ public class AppRequest {
     @Singular
     private List<Field> fields;
 
+    public Stream<Field> stream() {
+        return fields.stream();
+    }
+
     public String getEntityClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
     }
@@ -35,8 +39,24 @@ public class AppRequest {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.DTO_SUFFIX;
     }
 
-    public Stream<Field> stream() {
-        return fields.stream();
+    public String getObjectClassName() {
+        return entity.substring(0, 1).toLowerCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
+    }
+
+    public String getMapperClassName() {
+        return getEntityClassName() + Constants.MAPPER_SUFFIX;
+    }
+
+    public String getRepositoryClassName() {
+        return getEntityClassName() + Constants.REPOSITORY_SUFFIX;
+    }
+
+    public String getRepositoryObjectName() {
+        return getObjectClassName() + Constants.REPOSITORY_SUFFIX;
+    }
+
+    public String getServiceClassName() {
+        return getEntityClassName() + Constants.SERVICE_SUFFIX;
     }
 
 }

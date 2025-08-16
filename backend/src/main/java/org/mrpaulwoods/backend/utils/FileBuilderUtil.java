@@ -65,4 +65,25 @@ public class FileBuilderUtil {
         code.append("}\n\n");
     }
 
+    public static String absoluteDto(AppRequest appRequest) {
+        String sb = appRequest.getPkg() +
+                    ".dto." +
+                    appRequest.getDtoClassName();
+        return sb;
+    }
+
+    public static String absoluteMapper(AppRequest appRequest) {
+        String sb = appRequest.getPkg() +
+                    ".mapper." +
+                    appRequest.getMapperClassName();
+        return sb;
+    }
+
+    public static String absoluteRepository(AppRequest appRequest) {
+        String sb = appRequest.getPkg() +
+                    ".repository." +
+                    appRequest.getRepositoryClassName();
+        return sb;
+    }
+
 }

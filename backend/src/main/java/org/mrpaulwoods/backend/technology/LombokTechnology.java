@@ -12,7 +12,7 @@ public final class LombokTechnology implements Technology {
     public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
         switch (type) {
             case ENTITY, DTO -> code.append("import lombok.*;\n");
-            case SERVICE -> {
+            case SERVICE, CONTROLLER -> {
                 code.append("import lombok.RequiredArgsConstructor;\n");
                 code.append("import lombok.extern.slf4j.Slf4j;\n");
             }
@@ -28,7 +28,7 @@ public final class LombokTechnology implements Technology {
                 code.append("@NoArgsConstructor\n");
                 code.append("@AllArgsConstructor\n");
             }
-            case SERVICE -> {
+            case SERVICE, CONTROLLER -> {
                 code.append("@RequiredArgsConstructor\n");
                 code.append("@Slf4j\n");
             }

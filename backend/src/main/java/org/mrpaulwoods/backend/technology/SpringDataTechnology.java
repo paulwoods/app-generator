@@ -25,14 +25,26 @@ public final class SpringDataTechnology implements Technology {
                 code.append("import reactor.core.publisher.Flux;\n");
                 code.append("import reactor.core.publisher.Mono;\n");
             }
+            case CONTROLLER -> {
+                code.append("import org.springframework.http.HttpStatus;\n");
+                code.append("import org.springframework.web.bind.annotation.*;\n");
+                code.append("import reactor.core.publisher.Flux;\n");
+                code.append("import reactor.core.publisher.Mono;\n");
+            }
         }
 
     }
 
     @Override
     public void classAnnotationsCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
-        if (FileBuilderType.SERVICE == type) {
-            code.append("@Service\n");
+        switch (type) {
+            case SERVICE -> code.append("@Service\n");
+            case CONTROLLER -> {
+                code.append("@RestController\n");
+                code.append("@RequestMapping(\"/v1/");
+                code.append(appRequest.getEntityObjectName());
+                code.append("\")\n");
+            }
         }
     }
 

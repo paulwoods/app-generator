@@ -12,13 +12,16 @@ public final class ValidationTechnology implements Technology {
     @Override
     public void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
 
-        if (type != FileBuilderType.DTO) {
-            return;
+        switch (type) {
+            case DTO -> {
+                if (appRequest.getFields().stream().anyMatch(f -> f.getMinSize() != null || f.getMaxSize() != null)) {
+                    code.append("import jakarta.validation.constraints.Size;\n");
+                }
+            }
+
+            case CONTROLLER -> code.append("import jakarta.validation.Valid;\n");
         }
 
-        if (appRequest.getFields().stream().anyMatch(f -> f.getMinSize() != null || f.getMaxSize() != null)) {
-            code.append("import jakarta.validation.constraints.Size;\n");
-        }
     }
 
     @Override

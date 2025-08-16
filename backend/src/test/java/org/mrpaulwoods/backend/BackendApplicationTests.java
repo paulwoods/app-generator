@@ -106,6 +106,20 @@ public class BackendApplicationTests {
             public interface UserRepository extends ReactiveCrudRepository<User, UUID> {
             }
             
+            //file: src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java
+            
+            package org.mrpaulwoods.application.exception;
+            
+            import java.util.UUID;
+            
+            public class UserNotFoundException extends RuntimeException {
+            
+            	public UserNotFoundException(UUID id) {
+            		super("The user was not found: " + id);
+            	}
+            
+            }
+            
             //file: src/main/java/org/mrpaulwoods/application/service/UserService.java
             
             package org.mrpaulwoods.application.service;
@@ -167,16 +181,59 @@ public class BackendApplicationTests {
             
             }
             
-            //file: src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java
+            //file: src/main/java/org/mrpaulwoods/application/controller/UserController.java
             
-            package org.mrpaulwoods.application.exception;
+            package org.mrpaulwoods.application.controller;
             
+            import org.mrpaulwoods.application.dto.UserDto;
+            import org.mrpaulwoods.application.service.UserService;
+            import lombok.RequiredArgsConstructor;
+            import lombok.extern.slf4j.Slf4j;
+            import org.springframework.http.HttpStatus;
+            import org.springframework.web.bind.annotation.*;
+            import reactor.core.publisher.Flux;
+            import reactor.core.publisher.Mono;
             import java.util.UUID;
+            import jakarta.validation.Valid;
             
-            public class UserNotFoundException extends RuntimeException {
+            @RequiredArgsConstructor
+            @Slf4j
+            @RestController
+            @RequestMapping("/v1/user")
+            public class UserController {
             
-            	public UserNotFoundException(UUID id) {
-            		super("The user was not found: " + id);
+            	private final UserService userService;
+            
+            	@GetMapping
+            	public Flux<UserDto> list() {
+            		log.info("list");
+            		return userService.list();
+            	}
+            
+            	@PostMapping
+            	@ResponseStatus(code = HttpStatus.CREATED)
+            	public Mono<UserDto> create(@Valid @RequestBody UserDto dto) {
+            		log.info("create: {}", dto);
+            		return userService.create(dto);
+            	}
+            
+            	@GetMapping("/{id}")
+            	public Mono<UserDto> read(@PathVariable UUID id) {
+            		log.info("read: {}", id);
+            		return userService.read(id);
+            	}
+            
+            	@PutMapping("/{id}")
+            	public Mono<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserDto dto) {
+            		log.info("update: {} -> {}", id, dto);
+            		return userService.update(id, dto);
+            	}
+            
+            	@DeleteMapping("/{id}")
+            	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+            	public Mono<Void> delete(@PathVariable UUID id) {
+            		log.info("delete: {}", id);
+            		return userService.delete(id);
             	}
             
             }

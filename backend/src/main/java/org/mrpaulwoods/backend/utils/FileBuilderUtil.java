@@ -98,4 +98,10 @@ public class FileBuilderUtil {
                ".exception." +
                appRequest.getNotFoundExceptionClassName();
     }
+
+    public static String absoluteController(AppRequest appRequest) {
+        return appRequest.getPkg() +
+               ".controller." +
+               appRequest.getControllerClassName();
+    }
 }

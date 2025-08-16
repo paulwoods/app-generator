@@ -5,6 +5,7 @@ public enum FileBuilderType {
     DTO,
     MAPPER,
     REPOSITORY,
+    NOTFOUND_EXCEPTION,
     SERVICE,
-    NOTFOUND_EXCEPTION
+    CONTROLLER
 }

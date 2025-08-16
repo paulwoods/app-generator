@@ -59,8 +59,16 @@ public class AppRequest {
         return getEntityClassName() + Constants.SERVICE_SUFFIX;
     }
 
+    public String getServiceObjectName() {
+        return getEntityObjectName() + Constants.SERVICE_SUFFIX;
+    }
+
     public String getNotFoundExceptionClassName() {
         return getEntityClassName() + Constants.NOTFOUND_SUFFIX;
+    }
+
+    public String getControllerClassName() {
+        return getEntityClassName() + Constants.CONTROLLER_SUFFIX;
     }
 
 }

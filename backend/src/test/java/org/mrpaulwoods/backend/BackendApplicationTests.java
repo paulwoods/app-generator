@@ -124,7 +124,6 @@ public class BackendApplicationTests {
             @RequiredArgsConstructor
             @Slf4j
             @Service
-            
             public class UserService {
             
             	private final UserRepository userRepository;

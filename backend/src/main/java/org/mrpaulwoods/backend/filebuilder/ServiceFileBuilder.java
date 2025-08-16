@@ -47,7 +47,6 @@ public final class ServiceFileBuilder implements FileBuilder {
 
         // class annotations
         technologies.forEach(technology -> technology.classAnnotationsCodeBlock(appRequest, FileBuilderType.SERVICE, code));
-        code.append("\n");
 
         // class
         code.append("public class ");

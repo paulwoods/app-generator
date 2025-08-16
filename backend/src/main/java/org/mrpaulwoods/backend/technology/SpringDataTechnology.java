@@ -18,7 +18,8 @@ public final class SpringDataTechnology implements Technology {
                     code.append("import org.springframework.data.annotation.Id;\n");
                 }
             }
-            case DTO -> {
+            case REPOSITORY -> {
+                code.append("import org.springframework.data.repository.reactive.ReactiveCrudRepository;\n");
             }
         }
 
@@ -32,8 +33,6 @@ public final class SpringDataTechnology implements Technology {
                 if (field.isId()) {
                     code.append("\t@Id\n");
                 }
-            }
-            case DTO -> {
             }
         }
 

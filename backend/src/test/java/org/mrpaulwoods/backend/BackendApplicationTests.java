@@ -95,6 +95,17 @@ public class BackendApplicationTests {
             
             }
             
+            //file: src/src/java/org/mrpaulwoods/application/repository/UserRepository.java
+            
+            package org.mrpaulwoods.application.repository;
+            
+            import org.mrpaulwoods.application.entity.User;
+            import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+            import java.util.UUID;
+            
+            public interface UserRepository extends ReactiveCrudRepository<User, UUID> {
+            }
+            
             """;
     WebClient webClient;
     @LocalServerPort

@@ -1,4 +1,4 @@
-package org.mrpaulwoods.backend.export;
+package org.mrpaulwoods.backend.types;
 
 public enum FileBuilderType {
     ENTITY,

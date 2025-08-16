@@ -2,9 +2,9 @@ package org.mrpaulwoods.backend.technology;
 
 import org.junit.jupiter.api.Test;
 import org.mrpaulwoods.backend.Code;
-import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
+import org.mrpaulwoods.backend.types.FileBuilderType;
 
 import java.util.ArrayList;
 

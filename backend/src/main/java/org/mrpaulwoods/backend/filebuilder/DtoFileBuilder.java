@@ -1,15 +1,16 @@
-package org.mrpaulwoods.backend.export;
+package org.mrpaulwoods.backend.filebuilder;
 
 import lombok.RequiredArgsConstructor;
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
+import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.mrpaulwoods.backend.export.FileBuilderType.DTO;
+import static org.mrpaulwoods.backend.types.FileBuilderType.DTO;
 import static org.mrpaulwoods.backend.utils.Constants.DTO_OBJECT;
 import static org.mrpaulwoods.backend.utils.Constants.SOURCE_FOLDER;
 

@@ -1,8 +1,8 @@
 package org.mrpaulwoods.backend.technology;
 
 import org.mrpaulwoods.backend.Code;
-import org.mrpaulwoods.backend.export.FileBuilderType;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.types.FileBuilderType;
 import org.springframework.stereotype.Component;
 
 import static org.apache.commons.lang3.StringUtils.endsWithIgnoreCase;

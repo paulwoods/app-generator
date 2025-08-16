@@ -2,6 +2,7 @@ package org.mrpaulwoods.backend.filebuilder;
 
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.utils.Constants;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public final class MapperFileBuilder implements FileBuilder {
     @Override
     public void build(AppRequest appRequest, Code code) {
         // filename
-        FileBuilderUtil.buildFileName("src", "mapper", appRequest.getEntity(), "Mapper", appRequest, code);
+        FileBuilderUtil.buildFileName("src", "mapper", appRequest.getEntity(), Constants.MAPPER_SUFFIX, appRequest, code);
 
         // package
         FileBuilderUtil.appendPackage("mapper", appRequest, code);
@@ -34,7 +35,7 @@ public final class MapperFileBuilder implements FileBuilder {
         // class annotations
 
         // class
-        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), "Mapper", code);
+        FileBuilderUtil.appendClass(appRequest.getEntityClassName(), Constants.MAPPER_SUFFIX, code);
 
         // methods
         code.append("\tpublic static ");
@@ -61,8 +62,6 @@ public final class MapperFileBuilder implements FileBuilder {
         code.append("\t\t\t.build();\n");
         code.append("\t}\n\n");
 
-        ///////////////
-
         code.append("\tpublic static ");
         code.append(appRequest.getEntityClassName());
         code.append(" toEntity(");
@@ -86,8 +85,6 @@ public final class MapperFileBuilder implements FileBuilder {
 
         code.append("\t\t\t.build();\n");
         code.append("\t}\n\n");
-
-        ///////////////
 
         code.append("\tpublic static ");
         code.append(appRequest.getEntityClassName());

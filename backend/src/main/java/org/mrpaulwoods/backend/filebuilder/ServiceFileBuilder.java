@@ -5,6 +5,7 @@ import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
+import org.mrpaulwoods.backend.utils.Constants;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public final class ServiceFileBuilder implements FileBuilder {
     @Override
     public void build(AppRequest appRequest, Code code) {
         // filename
-        FileBuilderUtil.buildFileName("src", "service", appRequest.getEntity(), "Service", appRequest, code);
+        FileBuilderUtil.buildFileName("src", "service", appRequest.getEntity(), Constants.SERVICE_SUFFIX, appRequest, code);
 
         // package
         FileBuilderUtil.appendPackage("service", appRequest, code);

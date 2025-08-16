@@ -5,6 +5,7 @@ import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
+import org.mrpaulwoods.backend.utils.Constants;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public final class RepositoryFileBuilder implements FileBuilder {
     @Override
     public void build(AppRequest appRequest, Code code) {
         // filename
-        FileBuilderUtil.buildFileName("src", "repository", appRequest.getEntity(), "Repository", appRequest, code);
+        FileBuilderUtil.buildFileName("src", "repository", appRequest.getEntity(), Constants.REPOSITORY_SUFFIX, appRequest, code);
 
         // package
         FileBuilderUtil.appendPackage("repository", appRequest, code);
@@ -38,8 +39,8 @@ public final class RepositoryFileBuilder implements FileBuilder {
 
         // type
         code.append("public interface ");
-        code.append(appRequest.getEntity());
-        code.append("Repository extends ReactiveCrudRepository<");
+        code.append(appRequest.getRepositoryClassName());
+        code.append(" extends ReactiveCrudRepository<");
         code.append(appRequest.getEntityClassName());
         code.append(", UUID> {\n");
         code.append("}\n\n");

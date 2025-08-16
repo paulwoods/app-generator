@@ -106,6 +106,30 @@ public class BackendApplicationTests {
             public interface UserRepository extends ReactiveCrudRepository<User, UUID> {
             }
             
+            //file: src/src/java/org/mrpaulwoods/application/service/UserService.java
+            
+            package org.mrpaulwoods.application.service;
+            
+            import org.mrpaulwoods.application.dto.UserDto;
+            import org.mrpaulwoods.application.mapper.UserMapper;
+            import org.mrpaulwoods.application.repository.UserRepository;
+            import lombok.RequiredArgsConstructor;
+            import lombok.extern.slf4j.Slf4j;
+            import org.springframework.stereotype.Service;
+            import reactor.core.publisher.Flux;
+            import reactor.core.publisher.Mono;
+            import java.util.UUID;
+            
+            @RequiredArgsConstructor
+            @Slf4j
+            @Service
+            
+            public class UserService {
+            
+            	private final UserRepository userRepository;
+            
+            }
+            
             """;
     WebClient webClient;
     @LocalServerPort

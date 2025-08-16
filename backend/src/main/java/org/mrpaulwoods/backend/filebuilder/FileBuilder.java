@@ -14,7 +14,7 @@ public sealed interface FileBuilder permits
     int DTO_ORDER = 20;
     int MAPPER_ORDER = 30;
     int REPOSITORY_ORDER = 40;
-    int SERVICE_ORDER = 1;
+    int SERVICE_ORDER = 50;
 
     void build(AppRequest appRequest, Code code);
 }

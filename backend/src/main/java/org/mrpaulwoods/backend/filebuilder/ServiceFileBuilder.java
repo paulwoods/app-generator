@@ -39,8 +39,9 @@ public final class ServiceFileBuilder implements FileBuilder {
         code.append(FileBuilderUtil.absoluteRepository(appRequest));
         code.append(";\n");
 
-        //todo: import org.mrpaulwoods.sample1.exception.UserNotFoundException;
-        code.append("import org.mrpaulwoods.sample1.exception.UserNotFoundException;\n");
+        code.append("import ");
+        code.append(FileBuilderUtil.absoluteNotFound(appRequest));
+        code.append(";\n");
 
         technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.SERVICE, code));
         code.append("\n");

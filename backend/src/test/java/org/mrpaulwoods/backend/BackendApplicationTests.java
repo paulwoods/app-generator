@@ -113,7 +113,7 @@ public class BackendApplicationTests {
             import org.mrpaulwoods.application.dto.UserDto;
             import org.mrpaulwoods.application.mapper.UserMapper;
             import org.mrpaulwoods.application.repository.UserRepository;
-            import org.mrpaulwoods.sample1.exception.UserNotFoundException;
+            import org.mrpaulwoods.application.exception.UserNotFoundException;
             import lombok.RequiredArgsConstructor;
             import lombok.extern.slf4j.Slf4j;
             import org.springframework.stereotype.Service;
@@ -167,7 +167,22 @@ public class BackendApplicationTests {
             
             }
             
+            //file: src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java
+            
+            package org.mrpaulwoods.application.exception;
+            
+            import java.util.UUID;
+            
+            public class UserNotFoundException extends RuntimeException {
+            
+            	public UserNotFoundException(UUID id) {
+            		super("The user was not found: " + id);
+            	}
+            
+            }
+            
             """;
+
     WebClient webClient;
     @LocalServerPort
     private int port;

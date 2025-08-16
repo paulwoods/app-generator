@@ -59,4 +59,8 @@ public class AppRequest {
         return getEntityClassName() + Constants.SERVICE_SUFFIX;
     }
 
+    public String getNotFoundExceptionClassName() {
+        return getEntityClassName() + Constants.NOTFOUND_SUFFIX;
+    }
+
 }

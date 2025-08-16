@@ -3,18 +3,14 @@ package org.mrpaulwoods.backend.filebuilder;
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 
-public sealed interface FileBuilder permits
-        DtoFileBuilder,
-        EntityFileBuilder,
-        MapperFileBuilder,
-        RepositoryFileBuilder,
-        ServiceFileBuilder {
+public sealed interface FileBuilder permits DtoFileBuilder, EntityFileBuilder, MapperFileBuilder, NotFoundExceptionFileBuilder, RepositoryFileBuilder, ServiceFileBuilder {
 
     int ENTITY_ORDER = 10;
     int DTO_ORDER = 20;
     int MAPPER_ORDER = 30;
     int REPOSITORY_ORDER = 40;
     int SERVICE_ORDER = 50;
+    int NOT_FOUND_EXCEPTION_ORDER = 60;
 
     void build(AppRequest appRequest, Code code);
 }

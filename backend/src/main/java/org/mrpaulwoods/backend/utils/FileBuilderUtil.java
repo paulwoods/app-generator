@@ -93,4 +93,9 @@ public class FileBuilderUtil {
                appRequest.getServiceClassName();
     }
 
+    public static String absoluteNotFound(AppRequest appRequest) {
+        return appRequest.getPkg() +
+               ".exception." +
+               appRequest.getNotFoundExceptionClassName();
+    }
 }

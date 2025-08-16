@@ -1,0 +1,68 @@
+package org.mrpaulwoods.backend.filebuilder;
+
+import lombok.RequiredArgsConstructor;
+import org.mrpaulwoods.backend.Code;
+import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.technology.Technology;
+import org.mrpaulwoods.backend.types.FileBuilderType;
+import org.mrpaulwoods.backend.utils.FileBuilderUtil;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@Order(FileBuilder.NOT_FOUND_EXCEPTION_ORDER)
+@RequiredArgsConstructor
+public final class NotFoundExceptionFileBuilder implements FileBuilder {
+
+    private final List<Technology> technologies;
+
+    @Override
+    public void build(AppRequest appRequest, Code code) {
+        // filename
+        code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteNotFound(appRequest)));
+
+        // package
+        FileBuilderUtil.appendPackage("exception", appRequest, code);
+
+        // imports
+        technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.NOTFOUND_EXCEPTION, code));
+        code.append("\n");
+
+        // class
+        code.append("public class ");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append(" extends RuntimeException {\n\n");
+
+        // constructor
+        code.append("""
+                \tpublic %s(UUID id) {
+                \t\tsuper("The %s was not found: " + id);
+                \t}
+                
+                """.formatted(
+                appRequest.getNotFoundExceptionClassName(),
+                appRequest.getEntityObjectName()
+        ));
+
+        // end class
+        FileBuilderUtil.appendClassEnd(code);
+
+    }
+
+}
+/*
+package org.mrpaulwoods.sample1.exception;
+
+import java.util.UUID;
+
+public class UserNotFoundException extends RuntimeException {
+
+    public UserNotFoundException(UUID id) {
+        super("The user was not found: " + id);
+    }
+
+}
+
+ */

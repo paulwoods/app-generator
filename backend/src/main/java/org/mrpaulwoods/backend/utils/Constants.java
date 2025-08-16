@@ -10,4 +10,5 @@ public class Constants {
     public static final String MAPPER_SUFFIX = "Mapper";
     public static final String REPOSITORY_SUFFIX = "Repository";
     public static final String SERVICE_SUFFIX = "Service";
+    public static final String NOTFOUND_SUFFIX = "NotFoundException";
 }

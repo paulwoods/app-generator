@@ -6,6 +6,8 @@ import org.mrpaulwoods.backend.generate.dto.Field;
 import org.mrpaulwoods.backend.types.FileBuilderType;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public final class SpringDataTechnology implements Technology {
 
@@ -18,9 +20,9 @@ public final class SpringDataTechnology implements Technology {
                     code.append("import org.springframework.data.annotation.Id;\n");
                 }
             }
-            case REPOSITORY -> {
+            case REPOSITORY ->
                 code.append("import org.springframework.data.repository.reactive.ReactiveCrudRepository;\n");
-            }
+
         }
 
     }
@@ -28,11 +30,9 @@ public final class SpringDataTechnology implements Technology {
     @Override
     public void fieldAnnotationCodeBlock(AppRequest appRequest, FileBuilderType type, Field field, Code code) {
 
-        switch (type) {
-            case ENTITY -> {
-                if (field.isId()) {
-                    code.append("\t@Id\n");
-                }
+        if (Objects.requireNonNull(type) == FileBuilderType.ENTITY) {
+            if (field.isId()) {
+                code.append("\t@Id\n");
             }
         }
 

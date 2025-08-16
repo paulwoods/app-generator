@@ -56,7 +56,7 @@ public class BackendApplicationTests {
             
             }
             
-            //file: src/src/java/org/mrpaulwoods/application/mapper/UserMapper.java
+            //file: src/main/java/org/mrpaulwoods/application/mapper/UserMapper.java
             
             package org.mrpaulwoods.application.mapper;
             
@@ -95,7 +95,7 @@ public class BackendApplicationTests {
             
             }
             
-            //file: src/src/java/org/mrpaulwoods/application/repository/UserRepository.java
+            //file: src/main/java/org/mrpaulwoods/application/repository/UserRepository.java
             
             package org.mrpaulwoods.application.repository;
             
@@ -106,13 +106,14 @@ public class BackendApplicationTests {
             public interface UserRepository extends ReactiveCrudRepository<User, UUID> {
             }
             
-            //file: src/src/java/org/mrpaulwoods/application/service/UserService.java
+            //file: src/main/java/org/mrpaulwoods/application/service/UserService.java
             
             package org.mrpaulwoods.application.service;
             
             import org.mrpaulwoods.application.dto.UserDto;
             import org.mrpaulwoods.application.mapper.UserMapper;
             import org.mrpaulwoods.application.repository.UserRepository;
+            import org.mrpaulwoods.sample1.exception.UserNotFoundException;
             import lombok.RequiredArgsConstructor;
             import lombok.extern.slf4j.Slf4j;
             import org.springframework.stereotype.Service;
@@ -127,6 +128,43 @@ public class BackendApplicationTests {
             public class UserService {
             
             	private final UserRepository userRepository;
+            
+            	public Flux<UserDto> list() {
+            		log.debug("list");
+            		return userRepository.findAll()
+            			.map(UserMapper::toDto);
+            	}
+            
+            	public Mono<UserDto> create(UserDto dto) {
+            		log.debug("create: {}", dto);
+            		return Mono.justOrEmpty(dto)
+            			.map(UserMapper::toEntity)
+            			.flatMap(userRepository::save)
+            			.map(UserMapper::toDto);
+            		}
+            
+            	public Mono<UserDto> read(UUID id) {
+            		log.debug("read: {}", id);
+            		return userRepository.findById(id)
+            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            			.map(UserMapper::toDto);
+            	}
+            
+            	public Mono<UserDto> update(UUID id, UserDto dto) {
+            		log.debug("update: {} -> {}", id, dto);
+            		return userRepository.findById(id)
+            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            			.map(e -> UserMapper.update(dto, e))
+            			.flatMap(userRepository::save)
+            			.map(UserMapper::toDto);
+            	}
+            
+            	public Mono<Void> delete(UUID id) {
+            		log.debug("delete: {}", id);
+            		return userRepository.findById(id)
+            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            			.flatMap(u -> userRepository.delete(u));
+            	}
             
             }
             

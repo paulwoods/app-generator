@@ -14,7 +14,7 @@ public final class MapperFileBuilder implements FileBuilder {
     @Override
     public void build(AppRequest appRequest, Code code) {
         // filename
-        FileBuilderUtil.buildFileName("src", "mapper", appRequest.getEntity(), Constants.MAPPER_SUFFIX, appRequest, code);
+        code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteMapper(appRequest)));
 
         // package
         FileBuilderUtil.appendPackage("mapper", appRequest, code);

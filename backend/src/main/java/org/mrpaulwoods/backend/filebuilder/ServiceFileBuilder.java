@@ -5,7 +5,6 @@ import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
-import org.mrpaulwoods.backend.utils.Constants;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public final class ServiceFileBuilder implements FileBuilder {
     @Override
     public void build(AppRequest appRequest, Code code) {
         // filename
-        FileBuilderUtil.buildFileName("src", "service", appRequest.getEntity(), Constants.SERVICE_SUFFIX, appRequest, code);
+        code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteService(appRequest)));
 
         // package
         FileBuilderUtil.appendPackage("service", appRequest, code);
@@ -41,6 +40,7 @@ public final class ServiceFileBuilder implements FileBuilder {
         code.append(";\n");
 
         //todo: import org.mrpaulwoods.sample1.exception.UserNotFoundException;
+        code.append("import org.mrpaulwoods.sample1.exception.UserNotFoundException;\n");
 
         technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.SERVICE, code));
         code.append("\n");
@@ -61,53 +61,88 @@ public final class ServiceFileBuilder implements FileBuilder {
         code.append(appRequest.getRepositoryObjectName());
         code.append(";\n\n");
 
+        // list
+        code.append("""
+                \tpublic Flux<%s> list() {
+                \t\tlog.debug("list");
+                \t\treturn %s.findAll()
+                \t\t\t.map(%s::toDto);
+                \t}
+                
+                """.formatted(
+                appRequest.getDtoClassName(),
+                appRequest.getRepositoryObjectName(),
+                appRequest.getMapperClassName()
+        ));
+
+        // create
+        code.append("""
+                \tpublic Mono<%s> create(%s dto) {
+                \t\tlog.debug("create: {}", dto);
+                \t\treturn Mono.justOrEmpty(dto)
+                \t\t\t.map(%s::toEntity)
+                \t\t\t.flatMap(%s::save)
+                \t\t\t.map(%s::toDto);
+                \t\t}
+                
+                """.formatted(
+                appRequest.getDtoClassName(),
+                appRequest.getDtoClassName(),
+                appRequest.getMapperClassName(),
+                appRequest.getRepositoryObjectName(),
+                appRequest.getMapperClassName()
+        ));
+
+        // read
+        code.append("""
+                \tpublic Mono<%s> read(UUID id) {
+                \t\tlog.debug("read: {}", id);
+                \t\treturn %s.findById(id)
+                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+                \t\t\t.map(%s::toDto);
+                \t}
+                
+                """.formatted(
+                appRequest.getDtoClassName(),
+                appRequest.getRepositoryObjectName(),
+                appRequest.getMapperClassName()
+        ));
+
+        // update
+        code.append("""
+                \tpublic Mono<%s> update(UUID id, %s dto) {
+                \t\tlog.debug("update: {} -> {}", id, dto);
+                \t\treturn %s.findById(id)
+                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+                \t\t\t.map(e -> %s.update(dto, e))
+                \t\t\t.flatMap(%s::save)
+                \t\t\t.map(%s::toDto);
+                \t}
+                
+                """.formatted(
+                appRequest.getDtoClassName(),
+                appRequest.getDtoClassName(),
+                appRequest.getRepositoryObjectName(),
+                appRequest.getMapperClassName(),
+                appRequest.getRepositoryObjectName(),
+                appRequest.getMapperClassName()
+        ));
+
+        // delete
+        code.append("""
+                \tpublic Mono<Void> delete(UUID id) {
+                \t\tlog.debug("delete: {}", id);
+                \t\treturn %s.findById(id)
+                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+                \t\t\t.flatMap(u -> %s.delete(u));
+                \t}
+                
+                """.formatted(
+                appRequest.getRepositoryObjectName(),
+                appRequest.getRepositoryObjectName()
+        ));
 
         // end class
         FileBuilderUtil.appendClassEnd(code);
     }
 }
-
-/*
-
-    private final UserRepository userRepository;
-
-    public Flux<UserDto> list() {
-        log.debug("list");
-        return userRepository.findAll()
-                .map(UserMapper::toDto);
-    }
-
-    public Mono<UserDto> create(UserDto dto) {
-        log.debug("create: {}", dto);
-        return Mono.justOrEmpty(dto)
-                .map(UserMapper::toEntity)
-                .flatMap(userRepository::save)
-                .map(UserMapper::toDto);
-    }
-
-    public Mono<UserDto> read(UUID id) {
-        log.debug("read: {}", id);
-        return userRepository.findById(id)
-                .switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                .map(UserMapper::toDto);
-    }
-
-    public Mono<UserDto> update(UUID id, UserDto dto) {
-        log.debug("update: {} -> {}", id, dto);
-        return userRepository.findById(id)
-                .switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                .map(e -> UserMapper.update(dto, e))
-                .flatMap(userRepository::save)
-                .map(UserMapper::toDto);
-    }
-
-    public Mono<Void> delete(UUID id) {
-        log.debug("delete: {}", id);
-        return userRepository.findById(id)
-                .switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                .flatMap(u -> userRepository.deleteById(id));
-    }
-
-}
-
- */

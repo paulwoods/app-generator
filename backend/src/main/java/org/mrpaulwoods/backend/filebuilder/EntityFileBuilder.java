@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.mrpaulwoods.backend.types.FileBuilderType.ENTITY;
 import static org.mrpaulwoods.backend.utils.Constants.ENTITY_OBJECT;
-import static org.mrpaulwoods.backend.utils.Constants.SOURCE_FOLDER;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public final class EntityFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-        FileBuilderUtil.buildFileName(SOURCE_FOLDER, ENTITY_OBJECT, appRequest.getEntityClassName(), "", appRequest, code);
+        code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteEntity(appRequest)));
 
         // package
         FileBuilderUtil.appendPackage(ENTITY_OBJECT, appRequest, code);

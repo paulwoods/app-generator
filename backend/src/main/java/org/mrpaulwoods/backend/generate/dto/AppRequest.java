@@ -35,16 +35,20 @@ public class AppRequest {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
     }
 
+    public String getEntityObjectName() {
+        return entity.substring(0, 1).toLowerCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
+    }
+
     public String getDtoClassName() {
         return entity.substring(0, 1).toUpperCase() + entity.substring(1) + Constants.DTO_SUFFIX;
     }
 
-    public String getObjectClassName() {
-        return entity.substring(0, 1).toLowerCase() + entity.substring(1) + Constants.ENTITY_SUFFIX;
-    }
-
     public String getMapperClassName() {
         return getEntityClassName() + Constants.MAPPER_SUFFIX;
+    }
+
+    public String getMapperObjectName() {
+        return getEntityObjectName() + Constants.MAPPER_SUFFIX;
     }
 
     public String getRepositoryClassName() {
@@ -52,7 +56,7 @@ public class AppRequest {
     }
 
     public String getRepositoryObjectName() {
-        return getObjectClassName() + Constants.REPOSITORY_SUFFIX;
+        return getEntityObjectName() + Constants.REPOSITORY_SUFFIX;
     }
 
     public String getServiceClassName() {

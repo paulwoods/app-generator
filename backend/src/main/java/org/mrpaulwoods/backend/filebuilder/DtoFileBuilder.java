@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.mrpaulwoods.backend.types.FileBuilderType.DTO;
 import static org.mrpaulwoods.backend.utils.Constants.DTO_OBJECT;
-import static org.mrpaulwoods.backend.utils.Constants.SOURCE_FOLDER;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public final class DtoFileBuilder implements FileBuilder {
     public void build(AppRequest appRequest, Code code) {
 
         // filename
-        FileBuilderUtil.buildFileName(SOURCE_FOLDER, DTO_OBJECT, appRequest.getDtoClassName(), "", appRequest, code);
+        code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteDto(appRequest)));
 
         // package
         FileBuilderUtil.appendPackage(DTO_OBJECT, appRequest, code);

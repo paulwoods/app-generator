@@ -13,16 +13,14 @@ import java.util.List;
 
 public class FileBuilderUtil {
 
-    public static void buildFileName(String folder, String stub, String name, String suffix, AppRequest appRequest, Code code) {
+    public static String createSourceFilename(String absoluteName) {
         List<String> elements = new ArrayList<>();
         elements.add("src");
-        elements.add(folder);
+        elements.add("main");
         elements.add("java");
-        elements.addAll(Arrays.asList(appRequest.getPkg().split("\\.")));
-        elements.add(stub);
-        elements.add(name + suffix + ".java");
+        elements.addAll(Arrays.asList(absoluteName.split("\\.")));
         Path p = Path.of("", elements.toArray(new String[0]));
-        code.setFileName(p.toString());
+        return p + ".java";
     }
 
     public static void appendPackage(String entity, AppRequest appRequest, Code code) {
@@ -65,25 +63,34 @@ public class FileBuilderUtil {
         code.append("}\n\n");
     }
 
+    public static String absoluteEntity(AppRequest appRequest) {
+        return appRequest.getPkg() +
+               ".entity." +
+               appRequest.getEntityClassName();
+    }
+
     public static String absoluteDto(AppRequest appRequest) {
-        String sb = appRequest.getPkg() +
-                    ".dto." +
-                    appRequest.getDtoClassName();
-        return sb;
+        return appRequest.getPkg() +
+               ".dto." +
+               appRequest.getDtoClassName();
     }
 
     public static String absoluteMapper(AppRequest appRequest) {
-        String sb = appRequest.getPkg() +
-                    ".mapper." +
-                    appRequest.getMapperClassName();
-        return sb;
+        return appRequest.getPkg() +
+               ".mapper." +
+               appRequest.getMapperClassName();
     }
 
     public static String absoluteRepository(AppRequest appRequest) {
-        String sb = appRequest.getPkg() +
-                    ".repository." +
-                    appRequest.getRepositoryClassName();
-        return sb;
+        return appRequest.getPkg() +
+               ".repository." +
+               appRequest.getRepositoryClassName();
+    }
+
+    public static String absoluteService(AppRequest appRequest) {
+        return appRequest.getPkg() +
+               ".service." +
+               appRequest.getServiceClassName();
     }
 
 }

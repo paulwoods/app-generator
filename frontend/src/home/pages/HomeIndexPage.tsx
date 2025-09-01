@@ -2,15 +2,16 @@ import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/materia
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppRequestForm} from "../components/AppRequestForm.tsx";
 import axios from "axios";
-import type {AppRequest} from "../../types.ts";
+import type {AppRequest, GenerateResults} from "../../types.ts";
 import {useState} from "react";
+import {ResultsComponent} from "../components/ResultsComponent.tsx";
 
 export const HomeIndexPage = () => {
 
-    const [results, setResults] = useState<string>("");
+    const [results, setResults] = useState<GenerateResults>();
 
     const handleGenerate = (appRequest: AppRequest) => {
-        axios.post("/backend/v1/generate", appRequest)
+        axios.post<GenerateResults>("/backend/v1/generate", appRequest)
             .then(response => response.data)
             .then(setResults)
             .catch(console.error)
@@ -42,7 +43,8 @@ export const HomeIndexPage = () => {
         <hr/>
 
         <Box sx={{ml: 3}}>
-            <pre>{results}</pre>
+
+            {results && <ResultsComponent results={results}></ResultsComponent>}
         </Box>
 
     </Box>

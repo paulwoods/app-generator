@@ -75,25 +75,28 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
 
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3, width: "100%"}}>
 
-            <TextField
-                size="small"
-                fullWidth
-                label="Entity Name"
-                required
-                slotProps={{inputLabel: {shrink: true}}}
-                value={appRequest.entity}
-                onChange={(e) => setAppRequest({...appRequest, entity: e.target.value})}
-            />
+            <Box sx={{display: "flex", gap: 3, width: "100%"}}>
 
-            <TextField
-                size="small"
-                fullWidth
-                label="Package"
-                required
-                slotProps={{inputLabel: {shrink: true}}}
-                value={appRequest.pkg}
-                onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
-            />
+                <TextField
+                    size="small"
+                    sx={{width: "30em"}}
+                    label="Entity Name"
+                    required
+                    slotProps={{inputLabel: {shrink: true}}}
+                    value={appRequest.entity}
+                    onChange={(e) => setAppRequest({...appRequest, entity: e.target.value})}
+                />
+
+                <TextField
+                    size="small"
+                    fullWidth
+                    label="Package"
+                    required
+                    slotProps={{inputLabel: {shrink: true}}}
+                    value={appRequest.pkg}
+                    onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
+                />
+            </Box>
 
             <FieldsComponent
                 fields={appRequest.fields}

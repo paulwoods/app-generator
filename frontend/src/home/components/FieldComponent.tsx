@@ -1,13 +1,4 @@
-import {
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
-    IconButton,
-    type SxProps,
-    TableCell,
-    TableRow,
-    TextField
-} from "@mui/material";
+import {Checkbox, FormControlLabel, IconButton, type SxProps, TableCell, TableRow, TextField} from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import type {Field} from "../../types.ts";
 
@@ -24,10 +15,12 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
 
     return <>
 
-        <TableRow>
+        <TableRow hover>
+
             <TableCell sx={sx2}>
                 <IconButton onClick={() => onRemove(index)}><RemoveCircleOutlineIcon/></IconButton>
             </TableCell>
+
             <TableCell sx={sx2}>
                 <TextField
                     size="small"
@@ -39,6 +32,7 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
                     onChange={(e) => onUpdate({...field, name: e.target.value})}
                 />
             </TableCell>
+
             <TableCell sx={sx1}>
                 <TextField
                     size="small"
@@ -50,6 +44,7 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
                     onChange={(e) => onUpdate({...field, type: e.target.value})}
                 />
             </TableCell>
+
             <TableCell sx={sx1}>
                 <TextField
                     size="small"
@@ -60,6 +55,7 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
                     onChange={(e) => onUpdate({...field, minSize: parseInt(e.target.value, 10)})}
                 />
             </TableCell>
+
             <TableCell sx={sx1}>
                 <TextField
                     size="small"
@@ -70,27 +66,25 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
                     onChange={(e) => onUpdate({...field, maxSize: parseInt(e.target.value, 10)})}
                 />
             </TableCell>
-        </TableRow>
 
-        <TableRow>
-            <TableCell sx={sx1}>&nbsp;</TableCell>
+            <TableCell sx={sx1}>
 
-            <TableCell sx={sx1} colSpan={5}>
-
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox
-                        checked={field.id}
-                        onChange={e => onUpdate({...field, id: e.target.checked})}
-                    />} label="@Id"/>
-
-                    <FormControlLabel control={<Checkbox
-                        checked={field.nullable}
-                        onChange={e => onUpdate({...field, nullable: e.target.checked})}
-                    />} label="Nullable"/>
-
-                </FormGroup>
+                <FormControlLabel control={<Checkbox
+                    checked={field.id}
+                    onChange={e => onUpdate({...field, id: e.target.checked})}
+                />} label="@Id"/>
 
             </TableCell>
+
+            <TableCell sx={sx1}>
+
+                <FormControlLabel control={<Checkbox
+                    checked={field.nullable}
+                    onChange={e => onUpdate({...field, nullable: e.target.checked})}
+                />} label="Nullable"/>
+
+            </TableCell>
+
         </TableRow>
 
     </>

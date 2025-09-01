@@ -1,13 +1,13 @@
-import type {Code} from "../../types.ts";
-import {Box} from "@mui/material";
+import type {CodeType} from "../../types.ts";
+import {Box, Typography} from "@mui/material";
 
 type CodeComponentProps = {
-    code: Code
+    code: CodeType
 }
 export const CodeComponent = ({code}: CodeComponentProps) => {
 
-    return <Box sx={{p: 3}}>
-        <h4 style={{marginBottom: "2em", display: "flex", justifyContent: "center"}}>{code.fileName}</h4>
+    return <Box sx={{p: 3, pt: 1}}>
+        <Typography variant="h6" style={{marginBottom: "2em"}}>{code.fileName}</Typography>
         <pre>{code.content}</pre>
     </Box>
 }

@@ -1,21 +1,37 @@
-import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Button, IconButton, Paper, Tab, Tabs, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {AppRequestForm} from "../components/AppRequestForm.tsx";
+import {RequestForm} from "../components/RequestForm.tsx";
 import axios from "axios";
-import type {AppRequest, GenerateResults} from "../../types.ts";
-import {useState} from "react";
-import {ResultsComponent} from "../components/ResultsComponent.tsx";
+import type {AppRequestType, FileBuilderNameType, GenerateResultsType} from "../../types.ts";
+import {type SyntheticEvent, useEffect, useState} from "react";
+import {CodeComponent} from "../components/CodeComponent.tsx";
 
 export const HomeIndexPage = () => {
 
-    const [results, setResults] = useState<GenerateResults>();
+    const [results, setResults] = useState<GenerateResultsType>();
+    const [names, setNames] = useState<FileBuilderNameType[]>([]);
+    const [tab, setTab] = useState("FORM");
 
-    const handleGenerate = (appRequest: AppRequest) => {
-        axios.post<GenerateResults>("/backend/v1/generate", appRequest)
+    useEffect(() => {
+        axios.get<FileBuilderNameType[]>("/backend/v1/file-builder-name")
+            .then(response => response.data)
+            .then(setNames)
+            .catch(console.error)
+    }, [])
+
+    const handleGenerate = (appRequest: AppRequestType) => {
+        axios.post<GenerateResultsType>("/backend/v1/generate", appRequest)
             .then(response => response.data)
             .then(setResults)
             .catch(console.error)
     };
+
+    const handleChangeTab = (_event: SyntheticEvent, newValue: string) => {
+        setTab(newValue);
+    };
+
+    const index = names.findIndex(fbn => fbn.name === tab)
+    const code = (index === -1 || results == null) ? null : results.codes[index]
 
     return <Box sx={{flexGrow: 1}}>
         <AppBar position="static" enableColorOnDark>
@@ -36,16 +52,25 @@ export const HomeIndexPage = () => {
             </Toolbar>
         </AppBar>
 
-        <Box sx={{p: 4, width: "100%"}}>
-            <AppRequestForm storage="home.request-form" onGenerate={handleGenerate}/>
+        <Box sx={{width: "100%"}}>
+
+            <Tabs value={tab} onChange={handleChangeTab}>
+                <Tab label="FORM" value="FORM"/>
+                {results && names.map(fbn =>
+                    <Tab key={fbn.name} label={fbn.name} value={fbn.name}/>
+                )}
+            </Tabs>
+
         </Box>
 
-        <hr/>
+        <Paper sx={{m: 3}}>
+            {tab === "FORM" && <Box sx={{p: 4, width: "100%"}}>
+              <RequestForm storage="home.request-form" onGenerate={handleGenerate}/>
+            </Box>}
 
-        <Box sx={{ml: 3}}>
+            {code && <CodeComponent code={code}/>}
 
-            {results && <ResultsComponent results={results}></ResultsComponent>}
-        </Box>
+        </Paper>
 
     </Box>
 

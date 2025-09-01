@@ -1,14 +1,23 @@
-import {Checkbox, FormControlLabel, IconButton, type SxProps, TableCell, TableRow, TextField} from "@mui/material";
+import {
+    Checkbox,
+    FormControlLabel,
+    IconButton,
+    type SxProps,
+    TableCell,
+    TableRow,
+    TextField,
+    Tooltip
+} from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import type {Field} from "../../types.ts";
+import type {FieldType} from "../../types.ts";
 
 type FieldComponentProps = {
-    field: Field
+    field: FieldType
     index: number
     onRemove: (index: number) => void
-    onUpdate: (updatedField: Field) => void
+    onUpdate: (updatedField: FieldType) => void
 }
-export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponentProps) => {
+export const Field = ({field, index, onRemove, onUpdate}: FieldComponentProps) => {
 
     const sx1: SxProps = {border: 0};
     const sx2: SxProps = {...sx1, p: 0}
@@ -18,7 +27,9 @@ export const FieldComponent = ({field, index, onRemove, onUpdate}: FieldComponen
         <TableRow hover>
 
             <TableCell sx={sx2}>
-                <IconButton onClick={() => onRemove(index)}><RemoveCircleOutlineIcon/></IconButton>
+                <Tooltip title="Remove this field" placement="bottom-end" arrow>
+                    <IconButton onClick={() => onRemove(index)}><RemoveCircleOutlineIcon/></IconButton>
+                </Tooltip>
             </TableCell>
 
             <TableCell sx={sx2}>

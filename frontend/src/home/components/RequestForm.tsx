@@ -1,16 +1,16 @@
 import {useLocalStorage} from "usehooks-ts";
-import type {AppRequest, Field} from "../../types.ts";
-import {Box, Button, Paper, TextField, Typography} from "@mui/material";
+import type {AppRequestType, FieldType} from "../../types.ts";
+import {Box, Button, TextField} from "@mui/material";
 import {produce} from "immer";
-import {FieldsComponent} from "./FieldsComponent.tsx";
+import {Fields} from "./Fields.tsx";
 
 type AppRequestFormProps = {
     storage: string
-    onGenerate: (appRequest: AppRequest) => void
+    onGenerate: (appRequest: AppRequestType) => void
 }
-export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
+export const RequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
 
-    const [appRequest, setAppRequest] = useLocalStorage<AppRequest>(storage,
+    const [appRequest, setAppRequest] = useLocalStorage<AppRequestType>(storage,
         {
             entity: '',
             pkg: '',
@@ -39,7 +39,7 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         onGenerate(appRequest);
     };
 
-    const updateField = (newField: Field, index: number) => {
+    const updateField = (newField: FieldType, index: number) => {
         setAppRequest(produce(appRequest, draft => {
             draft.fields[index] = newField;
         }));
@@ -69,9 +69,9 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
         canGenerate = canGenerate && field.name && field.type;
     });
 
-    return <Paper sx={{p: 3, mt: 3, mb: 3}}>
+    return <Box>
 
-        <Typography sx={{m: 0, p: 0, mb: 3}}>App Generator Form</Typography>
+        {/*<Typography sx={{m: 0, p: 0, mb: 6}} variant="h4">App Generator Form</Typography>*/}
 
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3, width: "100%"}}>
 
@@ -96,18 +96,22 @@ export const AppRequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
                     value={appRequest.pkg}
                     onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
                 />
+
+                <div>
+                    <Button variant="contained" onClick={handleGenerate}
+                            disabled={!canGenerate}>Generate</Button>
+                </div>
+
             </Box>
 
-            <FieldsComponent
+            <Fields
                 fields={appRequest.fields}
                 onRemove={handleRemoveField}
                 onUpdate={updateField}
                 onAdd={handleAddField}
             />
 
-            <Button size="small" variant="contained" onClick={handleGenerate} disabled={!canGenerate}>Generate</Button>
-
         </Box>
 
-    </Paper>
+    </Box>
 }

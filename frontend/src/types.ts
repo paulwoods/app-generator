@@ -1,4 +1,4 @@
-export type Field = {
+export type FieldType = {
     name: string;
     type: string;
     id: boolean;
@@ -7,18 +7,23 @@ export type Field = {
     nullable: boolean;
 }
 
-export type AppRequest = {
+export type AppRequestType = {
     entity: string;
     pkg: string;
-    fields: Field[];
+    fields: FieldType[];
 }
 
-export type GenerateResults = {
-    codes: Code[]
+export type GenerateResultsType = {
+    codes: CodeType[]
 }
 
-export type Code = {
+export type CodeType = {
     name: string;
     fileName: string;
     content: string;
 }
+
+export type FileBuilderNameType = {
+    name: string
+}
+

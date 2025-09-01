@@ -1,15 +1,15 @@
-import {Box, IconButton, Table, TableBody, TableCell, TableRow, Typography} from "@mui/material";
+import {Box, IconButton, Table, TableBody, TableCell, TableRow, Tooltip, Typography} from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import {FieldComponent} from "./FieldComponent.tsx";
-import type {Field} from "../../types.ts";
+import {Field} from "./Field.tsx";
+import type {FieldType} from "../../types.ts";
 
 type FieldsComponentProps = {
-    fields: Field[],
+    fields: FieldType[],
     onRemove: (index: number) => void
-    onUpdate: (updatedField: Field, index: number) => void
+    onUpdate: (updatedField: FieldType, index: number) => void
     onAdd: () => void
 }
-export const FieldsComponent = ({fields, onRemove, onUpdate, onAdd}: FieldsComponentProps) => {
+export const Fields = ({fields, onRemove, onUpdate, onAdd}: FieldsComponentProps) => {
     return <Box>
 
         <Typography sx={{m: 0, p: 0}}>Fields</Typography>
@@ -17,7 +17,7 @@ export const FieldsComponent = ({fields, onRemove, onUpdate, onAdd}: FieldsCompo
         <Table size="small" sx={{width: "auto"}}>
             <TableBody>
                 {fields.map((field, index) =>
-                    <FieldComponent
+                    <Field
                         key={index}
                         field={field}
                         index={index}
@@ -29,7 +29,9 @@ export const FieldsComponent = ({fields, onRemove, onUpdate, onAdd}: FieldsCompo
 
                 <TableRow>
                     <TableCell sx={{p: 0, border: 0}}>
-                        <IconButton onClick={onAdd}><AddCircleOutlineIcon/></IconButton>
+                        <Tooltip title="Add another field" placement="bottom-end" arrow>
+                            <IconButton onClick={onAdd}><AddCircleOutlineIcon/></IconButton>
+                        </Tooltip>
                     </TableCell>
                 </TableRow>
 

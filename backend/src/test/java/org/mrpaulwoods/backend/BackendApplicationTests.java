@@ -28,10 +28,10 @@ public class BackendApplicationTests {
             @AllArgsConstructor
             public class User {
             
-            	@Id
-            	private UUID id;
+            \t@Id
+            \tprivate UUID id;
             
-            	private String name;
+            \tprivate String name;
             
             }
             
@@ -49,10 +49,10 @@ public class BackendApplicationTests {
             @AllArgsConstructor
             public class UserDto {
             
-            	private UUID id;
+            \tprivate UUID id;
             
-            	@Size(max = 100)
-            	private String name;
+            \t@Size(max = 100)
+            \tprivate String name;
             
             }
             
@@ -65,33 +65,33 @@ public class BackendApplicationTests {
             
             public class UserMapper {
             
-            	public static UserDto toDto(User entity) {
-            		if (entity == null) {
-            			return null;
-            		}
-            		return UserDto.builder()
-            			.id(entity.getId())
-            			.name(entity.getName())
-            			.build();
-            	}
+            \tpublic static UserDto toDto(User entity) {
+            \t\tif (entity == null) {
+            \t\t\treturn null;
+            \t\t}
+            \t\treturn UserDto.builder()
+            \t\t\t.id(entity.getId())
+            \t\t\t.name(entity.getName())
+            \t\t\t.build();
+            \t}
             
-            	public static User toEntity(UserDto dto) {
-            		if (dto == null) {
-            			return null;
-            		}
-            		return User.builder()
-            			.id(dto.getId())
-            			.name(dto.getName())
-            			.build();
-            	}
+            \tpublic static User toEntity(UserDto dto) {
+            \t\tif (dto == null) {
+            \t\t\treturn null;
+            \t\t}
+            \t\treturn User.builder()
+            \t\t\t.id(dto.getId())
+            \t\t\t.name(dto.getName())
+            \t\t\t.build();
+            \t}
             
-            	public static User update(UserDto dto, User entity) {
-            		if (dto == null || entity == null) {
-            			return null;
-            		}
-            		entity.setName(dto.getName());
-            		return entity;
-            	}
+            \tpublic static User update(UserDto dto, User entity) {
+            \t\tif (dto == null || entity == null) {
+            \t\t\treturn null;
+            \t\t}
+            \t\tentity.setName(dto.getName());
+            \t\treturn entity;
+            \t}
             
             }
             
@@ -114,9 +114,9 @@ public class BackendApplicationTests {
             
             public class UserNotFoundException extends RuntimeException {
             
-            	public UserNotFoundException(UUID id) {
-            		super("The user was not found: " + id);
-            	}
+            \tpublic UserNotFoundException(UUID id) {
+            \t\tsuper("The user was not found: " + id);
+            \t}
             
             }
             
@@ -140,44 +140,44 @@ public class BackendApplicationTests {
             @Service
             public class UserService {
             
-            	private final UserRepository userRepository;
+            \tprivate final UserRepository userRepository;
             
-            	public Flux<UserDto> list() {
-            		log.debug("list");
-            		return userRepository.findAll()
-            			.map(UserMapper::toDto);
-            	}
+            \tpublic Flux<UserDto> list() {
+            \t\tlog.debug("list");
+            \t\treturn userRepository.findAll()
+            \t\t\t.map(UserMapper::toDto);
+            \t}
             
-            	public Mono<UserDto> create(UserDto dto) {
-            		log.debug("create: {}", dto);
-            		return Mono.justOrEmpty(dto)
-            			.map(UserMapper::toEntity)
-            			.flatMap(userRepository::save)
-            			.map(UserMapper::toDto);
-            	}
+            \tpublic Mono<UserDto> create(UserDto dto) {
+            \t\tlog.debug("create: {}", dto);
+            \t\treturn Mono.justOrEmpty(dto)
+            \t\t\t.map(UserMapper::toEntity)
+            \t\t\t.flatMap(userRepository::save)
+            \t\t\t.map(UserMapper::toDto);
+            \t}
             
-            	public Mono<UserDto> read(UUID id) {
-            		log.debug("read: {}", id);
-            		return userRepository.findById(id)
-            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-            			.map(UserMapper::toDto);
-            	}
+            \tpublic Mono<UserDto> read(UUID id) {
+            \t\tlog.debug("read: {}", id);
+            \t\treturn userRepository.findById(id)
+            \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            \t\t\t.map(UserMapper::toDto);
+            \t}
             
-            	public Mono<UserDto> update(UUID id, UserDto dto) {
-            		log.debug("update: {} -> {}", id, dto);
-            		return userRepository.findById(id)
-            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-            			.map(e -> UserMapper.update(dto, e))
-            			.flatMap(userRepository::save)
-            			.map(UserMapper::toDto);
-            	}
+            \tpublic Mono<UserDto> update(UUID id, UserDto dto) {
+            \t\tlog.debug("update: {} -> {}", id, dto);
+            \t\treturn userRepository.findById(id)
+            \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            \t\t\t.map(e -> UserMapper.update(dto, e))
+            \t\t\t.flatMap(userRepository::save)
+            \t\t\t.map(UserMapper::toDto);
+            \t}
             
-            	public Mono<Void> delete(UUID id) {
-            		log.debug("delete: {}", id);
-            		return userRepository.findById(id)
-            			.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-            			.flatMap(u -> userRepository.delete(u));
-            	}
+            \tpublic Mono<Void> delete(UUID id) {
+            \t\tlog.debug("delete: {}", id);
+            \t\treturn userRepository.findById(id)
+            \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
+            \t\t\t.flatMap(u -> userRepository.delete(u));
+            \t}
             
             }
             
@@ -202,39 +202,48 @@ public class BackendApplicationTests {
             @RequestMapping("/v1/user")
             public class UserController {
             
-            	private final UserService userService;
+            \tprivate final UserService userService;
             
-            	@GetMapping
-            	public Flux<UserDto> list() {
-            		log.info("list");
-            		return userService.list();
-            	}
+            \t@GetMapping
+            \tpublic Flux<UserDto> list() {
+            \t\tlog.info("list");
+            \t\treturn userService.list();
+            \t}
             
-            	@PostMapping
-            	@ResponseStatus(code = HttpStatus.CREATED)
-            	public Mono<UserDto> create(@Valid @RequestBody UserDto dto) {
-            		log.info("create: {}", dto);
-            		return userService.create(dto);
-            	}
+            \t@PostMapping
+            \t@ResponseStatus(code = HttpStatus.CREATED)
+            \tpublic Mono<UserDto> create(@Valid @RequestBody UserDto dto) {
+            \t\tlog.info("create: {}", dto);
+            \t\treturn userService.create(dto);
+            \t}
             
-            	@GetMapping("/{id}")
-            	public Mono<UserDto> read(@PathVariable UUID id) {
-            		log.info("read: {}", id);
-            		return userService.read(id);
-            	}
+            \t@GetMapping("/{id}")
+            \tpublic Mono<UserDto> read(@PathVariable UUID id) {
+            \t\tlog.info("read: {}", id);
+            \t\treturn userService.read(id);
+            \t}
             
-            	@PutMapping("/{id}")
-            	public Mono<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserDto dto) {
-            		log.info("update: {} -> {}", id, dto);
-            		return userService.update(id, dto);
-            	}
+            \t@PutMapping("/{id}")
+            \tpublic Mono<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserDto dto) {
+            \t\tlog.info("update: {} -> {}", id, dto);
+            \t\treturn userService.update(id, dto);
+            \t}
             
-            	@DeleteMapping("/{id}")
-            	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-            	public Mono<Void> delete(@PathVariable UUID id) {
-            		log.info("delete: {}", id);
-            		return userService.delete(id);
-            	}
+            \t@DeleteMapping("/{id}")
+            \t@ResponseStatus(code = HttpStatus.NO_CONTENT)
+            \tpublic Mono<Void> delete(@PathVariable UUID id) {
+            \t\tlog.info("delete: {}", id);
+            \t\treturn userService.delete(id);
+            \t}
+            
+            \t@ExceptionHandler(UserNotFoundException.class)
+            \tpublic ProblemDetail handleException(UserNotFoundException ex) {
+            \t\tvar problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+            \t\tproblem.setType(URI.create("http://www.example.com/problems/user/not-found"));
+            \t\tproblem.setTitle("User Not Found");
+            \t\tproblem.setDetail(ex.getMessage());
+            \t\treturn problem;
+            \t}
             
             }
             

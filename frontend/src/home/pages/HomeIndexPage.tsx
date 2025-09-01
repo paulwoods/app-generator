@@ -30,8 +30,7 @@ export const HomeIndexPage = () => {
         setTab(newValue);
     };
 
-    const index = names.findIndex(fbn => fbn.name === tab)
-    const code = (index === -1 || results == null) ? null : results.codes[index]
+    const code = results && results.codes.find(c => c.name === tab)
 
     return <Box sx={{flexGrow: 1}}>
         <AppBar position="static" enableColorOnDark>

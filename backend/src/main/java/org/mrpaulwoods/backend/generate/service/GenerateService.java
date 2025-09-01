@@ -27,12 +27,6 @@ public class GenerateService {
                     .map(builder -> builder.build(appRequest))
                     .toList();
 
-//            List<Code> codes = fileBuilders.stream()
-//                    .map(builder -> new BuilderCodePair(builder, new Code()))
-//                    .peek(pair -> pair.builder().build(appRequest, pair.code()))
-//                    .map(BuilderCodePair::code)
-//                    .toList();
-
             GenerateResults results = new GenerateResults(codes);
 
             sink.success(results);

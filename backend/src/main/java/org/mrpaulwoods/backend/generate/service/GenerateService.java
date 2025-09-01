@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.filebuilder.FileBuilder;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.generate.dto.GenerateResults;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -17,28 +18,24 @@ public class GenerateService {
 
     private final List<FileBuilder> fileBuilders;
 
-    public Mono<String> generate(AppRequest appRequest) {
+    public Mono<GenerateResults> generate(AppRequest appRequest) {
         log.debug("generate: {}", appRequest);
 
         return Mono.create(sink -> {
 
             List<Code> codes = fileBuilders.stream()
-                    .map(builder -> new BuilderCodePair(builder, new Code()))
-                    .peek(pair -> pair.builder().build(appRequest, pair.code()))
-                    .map(BuilderCodePair::code)
-
+                    .map(builder -> builder.build(appRequest))
                     .toList();
 
-            StringBuilder sb = new StringBuilder();
-            codes.forEach(c -> {
-                sb.append("//file: ");
-                sb.append(c.getFileName());
-                sb.append("\n\n");
-                sb.append(c.getContent().toString());
-            });
+//            List<Code> codes = fileBuilders.stream()
+//                    .map(builder -> new BuilderCodePair(builder, new Code()))
+//                    .peek(pair -> pair.builder().build(appRequest, pair.code()))
+//                    .map(BuilderCodePair::code)
+//                    .toList();
 
-            String s = sb.toString();
-            sink.success(s);
+            GenerateResults results = new GenerateResults(codes);
+
+            sink.success(results);
         });
 
     }

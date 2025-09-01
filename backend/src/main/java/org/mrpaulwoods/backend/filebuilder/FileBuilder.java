@@ -2,6 +2,7 @@ package org.mrpaulwoods.backend.filebuilder;
 
 import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.utils.FileBuilderName;
 
 public sealed interface FileBuilder permits
         DtoFileBuilder,
@@ -20,5 +21,7 @@ public sealed interface FileBuilder permits
     int SERVICE_ORDER = 60;
     int CONTROLLER_ORDER = 70;
 
-    void build(AppRequest appRequest, Code code);
+    FileBuilderName getName();
+
+    Code build(AppRequest appRequest);
 }

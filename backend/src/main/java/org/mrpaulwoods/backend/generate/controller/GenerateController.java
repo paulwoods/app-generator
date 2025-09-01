@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
+import org.mrpaulwoods.backend.generate.dto.GenerateResults;
 import org.mrpaulwoods.backend.generate.service.GenerateService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +21,9 @@ public class GenerateController {
     private final GenerateService generateService;
 
     @PostMapping
-    public Mono<String> generate(@Valid @RequestBody AppRequest appRequest) {
+    public Mono<GenerateResults> generate(@Valid @RequestBody AppRequest appRequest) {
         log.info("generate: {}", appRequest);
         return generateService.generate(appRequest);
     }
+    
 }

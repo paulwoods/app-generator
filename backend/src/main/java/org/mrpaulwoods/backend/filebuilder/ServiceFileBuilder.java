@@ -5,6 +5,7 @@ import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
+import org.mrpaulwoods.backend.utils.FileBuilderName;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,15 @@ public final class ServiceFileBuilder implements FileBuilder {
     private final List<Technology> technologies;
 
     @Override
-    public void build(AppRequest appRequest, Code code) {
+    public FileBuilderName getName() {
+        return FileBuilderName.SERVICE;
+    }
+
+    @Override
+    public Code build(AppRequest appRequest) {
+
+        Code code = Code.builder().name(getName()).build();
+
         // filename
         code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteService(appRequest)));
 
@@ -144,5 +153,7 @@ public final class ServiceFileBuilder implements FileBuilder {
 
         // end class
         FileBuilderUtil.appendClassEnd(code);
+
+        return code;
     }
 }

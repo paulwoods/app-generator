@@ -5,6 +5,7 @@ import org.mrpaulwoods.backend.Code;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
+import org.mrpaulwoods.backend.utils.FileBuilderName;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,15 @@ public final class NotFoundExceptionFileBuilder implements FileBuilder {
     private final List<Technology> technologies;
 
     @Override
-    public void build(AppRequest appRequest, Code code) {
+    public FileBuilderName getName() {
+        return FileBuilderName.NOTFOUND;
+    }
+
+    @Override
+    public Code build(AppRequest appRequest) {
+
+        Code code = Code.builder().name(getName()).build();
+
         // filename
         code.setFileName(FileBuilderUtil.createSourceFilename(FileBuilderUtil.absoluteNotFound(appRequest)));
 
@@ -49,20 +58,7 @@ public final class NotFoundExceptionFileBuilder implements FileBuilder {
         // end class
         FileBuilderUtil.appendClassEnd(code);
 
+        return code;
     }
 
 }
-/*
-package org.mrpaulwoods.sample1.exception;
-
-import java.util.UUID;
-
-public class UserNotFoundException extends RuntimeException {
-
-    public UserNotFoundException(UUID id) {
-        super("The user was not found: " + id);
-    }
-
-}
-
- */

@@ -7,13 +7,11 @@ import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.types.FileBuilderType;
 import org.mrpaulwoods.backend.utils.FileBuilderName;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Order(FileBuilder.SERVICE_ORDER)
 @RequiredArgsConstructor
 public final class ServiceFileBuilder implements FileBuilder {
 

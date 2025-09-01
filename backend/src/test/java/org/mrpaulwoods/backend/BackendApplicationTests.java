@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 import org.mrpaulwoods.backend.generate.dto.GenerateResults;
-import org.mrpaulwoods.backend.utils.FileBuilderName;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
+
+import static org.mrpaulwoods.backend.utils.FileBuilderName.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BackendApplicationTests {
@@ -58,8 +59,8 @@ public class BackendApplicationTests {
 
                     Assertions.assertEquals(7, gr.codes().size());
 
-                    Assertions.assertEquals(FileBuilderName.ENTITY, gr.code(0).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/entity/User.java", gr.codes().get(0).getFileName());
+                    Code code = gr.code(ENTITY);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/entity/User.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.entity;
                             
@@ -83,10 +84,10 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(0).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.DTO, gr.code(1).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/dto/UserDto.java", gr.codes().get(1).getFileName());
+                    code = gr.code(DTO);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/dto/UserDto.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.dto;
                             
@@ -110,10 +111,10 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(1).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.MAPPER, gr.code(2).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/mapper/UserMapper.java", gr.codes().get(2).getFileName());
+                    code = gr.code(MAPPER);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/mapper/UserMapper.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.mapper;
                             
@@ -155,10 +156,10 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(2).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.REPOSITORY, gr.code(3).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/repository/UserRepository.java", gr.codes().get(3).getFileName());
+                    code = gr.code(REPOSITORY);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/repository/UserRepository.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.repository;
                             
@@ -169,10 +170,10 @@ public class BackendApplicationTests {
                             public interface UserRepository extends ReactiveCrudRepository<User, UUID> {
                             }
                             
-                            """, gr.codes().get(3).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.NOTFOUND, gr.code(4).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java", gr.codes().get(4).getFileName());
+                    code = gr.code(NOTFOUND);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.exception;
                             
@@ -186,10 +187,10 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(4).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.SERVICE, gr.code(5).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/service/UserService.java", gr.codes().get(5).getFileName());
+                    code = gr.code(SERVICE);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/service/UserService.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.service;
                             
@@ -250,10 +251,10 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(5).getContentAsString());
+                            """, code.getContentAsString());
 
-                    Assertions.assertEquals(FileBuilderName.CONTROLLER, gr.code(6).getName());
-                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/controller/UserController.java", gr.codes().get(6).getFileName());
+                    code = gr.code(CONTROLLER);
+                    Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/controller/UserController.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.controller;
                             
@@ -319,7 +320,7 @@ public class BackendApplicationTests {
                             
                             }
                             
-                            """, gr.codes().get(6).getContentAsString());
+                            """, code.getContentAsString());
 
                 })
                 .verifyComplete();

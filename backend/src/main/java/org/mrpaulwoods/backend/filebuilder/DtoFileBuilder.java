@@ -6,7 +6,6 @@ import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.technology.Technology;
 import org.mrpaulwoods.backend.utils.FileBuilderName;
 import org.mrpaulwoods.backend.utils.FileBuilderUtil;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import static org.mrpaulwoods.backend.utils.Constants.DTO_OBJECT;
 
 @Component
 @RequiredArgsConstructor
-@Order(FileBuilder.DTO_ORDER)
 public final class DtoFileBuilder implements FileBuilder {
 
     private final List<Technology> technologies;

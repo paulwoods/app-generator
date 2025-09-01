@@ -5,7 +5,7 @@ import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
 import org.mrpaulwoods.backend.types.FileBuilderType;
 
-public sealed interface Technology permits LombokTechnology, SpringDataTechnology, UUIDTechnology, ValidationTechnology {
+public sealed interface Technology permits LocalDateTimeTechnology, LombokTechnology, SpringDataTechnology, UUIDTechnology, ValidationTechnology {
 
     default void importCodeBlock(AppRequest appRequest, FileBuilderType type, Code code) {
     }

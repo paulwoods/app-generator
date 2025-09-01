@@ -42,6 +42,10 @@ public class BackendApplicationTests {
                         .type("String")
                         .maxSize(100)
                         .build())
+                .field(Field.builder()
+                        .name("createdAt")
+                        .type("LocalDateTime")
+                        .build())
                 .build();
 
         webClient.post()
@@ -59,6 +63,7 @@ public class BackendApplicationTests {
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.entity;
                             
+                            import java.time.LocalDateTime;
                             import lombok.*;
                             import org.springframework.data.annotation.Id;
                             import java.util.UUID;
@@ -74,6 +79,8 @@ public class BackendApplicationTests {
                             
                             \tprivate String name;
                             
+                            \tprivate LocalDateTime createdAt;
+                            
                             }
                             
                             """, gr.codes().get(0).getContentAsString());
@@ -83,6 +90,7 @@ public class BackendApplicationTests {
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.dto;
                             
+                            import java.time.LocalDateTime;
                             import lombok.*;
                             import java.util.UUID;
                             import jakarta.validation.constraints.Size;
@@ -97,6 +105,8 @@ public class BackendApplicationTests {
                             
                             \t@Size(max = 100)
                             \tprivate String name;
+                            
+                            \tprivate LocalDateTime createdAt;
                             
                             }
                             
@@ -119,6 +129,7 @@ public class BackendApplicationTests {
                             \t\treturn UserDto.builder()
                             \t\t\t.id(entity.getId())
                             \t\t\t.name(entity.getName())
+                            \t\t\t.createdAt(entity.getCreatedAt())
                             \t\t\t.build();
                             \t}
                             
@@ -129,6 +140,7 @@ public class BackendApplicationTests {
                             \t\treturn User.builder()
                             \t\t\t.id(dto.getId())
                             \t\t\t.name(dto.getName())
+                            \t\t\t.createdAt(dto.getCreatedAt())
                             \t\t\t.build();
                             \t}
                             
@@ -137,6 +149,7 @@ public class BackendApplicationTests {
                             \t\t\treturn null;
                             \t\t}
                             \t\tentity.setName(dto.getName());
+                            \t\tentity.setCreatedAt(dto.getCreatedAt());
                             \t\treturn entity;
                             \t}
                             

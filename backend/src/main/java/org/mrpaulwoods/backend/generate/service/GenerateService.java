@@ -40,8 +40,5 @@ public class GenerateService {
 
     }
 
-    record BuilderCodePair(FileBuilder builder, Code code) {
-    }
-
 }
 

@@ -4,9 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.mrpaulwoods.backend.exceptions.IdFieldNotFound;
 import org.mrpaulwoods.backend.utils.Constants;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 @Data
@@ -69,6 +71,22 @@ public class AppRequest {
 
     public String getControllerClassName() {
         return getEntityClassName() + Constants.CONTROLLER_SUFFIX;
+    }
+
+    public Field getIdField() {
+        return fields.stream()
+                .filter(Field::isId)
+                .findFirst()
+                .orElseThrow(IdFieldNotFound::new);
+    }
+
+    public String getIdFieldType() {
+        return switch (getIdField().getType().toLowerCase(Locale.ROOT)) {
+            case "uuid" -> "UUID";
+            case "long" -> "Long";
+            default -> "";
+        };
+
     }
 
 }

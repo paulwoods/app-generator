@@ -14,7 +14,7 @@ import reactor.test.StepVerifier;
 import static org.mrpaulwoods.backend.utils.FileBuilderName.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BackendApplicationTests {
+public class BackendApplicationIT {
 
     WebClient webClient;
     @LocalServerPort
@@ -260,6 +260,7 @@ public class BackendApplicationTests {
                             
                             import org.mrpaulwoods.application.dto.UserDto;
                             import org.mrpaulwoods.application.service.UserService;
+                            import org.springframework.http.ProblemDetail
                             import lombok.RequiredArgsConstructor;
                             import lombok.extern.slf4j.Slf4j;
                             import org.springframework.http.HttpStatus;

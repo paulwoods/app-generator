@@ -43,12 +43,16 @@ public final class RepositoryFileBuilder implements FileBuilder {
         technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.REPOSITORY, code));
         code.append("\n");
 
+
         // type
         code.append("public interface ");
         code.append(appRequest.getRepositoryClassName());
         code.append(" extends ReactiveCrudRepository<");
         code.append(appRequest.getEntityClassName());
-        code.append(", UUID> {\n");
+        code.append(", ");
+        code.append(appRequest.getIdFieldType());
+
+        code.append("> {\n");
         code.append("}\n\n");
 
         return code;

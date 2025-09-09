@@ -69,89 +69,106 @@ public final class ServiceFileBuilder implements FileBuilder {
         code.append(";\n\n");
 
         // list
-        code.append("""
-                \tpublic Flux<%s> list() {
-                \t\tlog.debug("list");
-                \t\treturn %s.findAll()
-                \t\t\t.map(%s::toDto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getRepositoryObjectName(),
-                appRequest.getMapperClassName()
-        ));
+        code.append("\tpublic Flux<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> list() {\n");
+        code.append("\t\tlog.debug(\"list\");\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append(".findAll()\n");
+        code.append("\t\t\t.map(");
+        code.append(appRequest.getMapperClassName());
+        code.append("::toDto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // create
-        code.append("""
-                \tpublic Mono<%s> create(%s dto) {
-                \t\tlog.debug("create: {}", dto);
-                \t\treturn Mono.justOrEmpty(dto)
-                \t\t\t.map(%s::toEntity)
-                \t\t\t.flatMap(%s::save)
-                \t\t\t.map(%s::toDto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getDtoClassName(),
-                appRequest.getMapperClassName(),
-                appRequest.getRepositoryObjectName(),
-                appRequest.getMapperClassName()
-        ));
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> create(");
+        code.append(appRequest.getDtoClassName());
+        code.append(" dto) {\n");
+        code.append("\t\tlog.debug(\"create: {}\", dto);\n");
+        code.append("\t\treturn Mono.justOrEmpty(dto)\n");
+        code.append("\t\t\t.map(");
+        code.append(appRequest.getMapperClassName());
+        code.append("::toEntity)\n");
+        code.append("\t\t\t.flatMap(");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append("::save)\n");
+        code.append("\t\t\t.map(");
+        code.append(appRequest.getMapperClassName());
+        code.append("::toDto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // read
-        code.append("""
-                \tpublic Mono<%s> read(UUID id) {
-                \t\tlog.debug("read: {}", id);
-                \t\treturn %s.findById(id)
-                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                \t\t\t.map(%s::toDto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getRepositoryObjectName(),
-                appRequest.getMapperClassName()
-        ));
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> read(");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id) {\n");
+        code.append("\t\tlog.debug(\"read: {}\", id);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append(".findById(id)\n");
+        code.append("\t\t\t.switchIfEmpty(Mono.error(new ");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append("(id)))\n");
+        code.append("\t\t\t.map(");
+        code.append(appRequest.getMapperClassName());
+        code.append("::toDto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // update
-        code.append("""
-                \tpublic Mono<%s> update(UUID id, %s dto) {
-                \t\tlog.debug("update: {} -> {}", id, dto);
-                \t\treturn %s.findById(id)
-                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                \t\t\t.map(e -> %s.update(dto, e))
-                \t\t\t.flatMap(%s::save)
-                \t\t\t.map(%s::toDto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getDtoClassName(),
-                appRequest.getRepositoryObjectName(),
-                appRequest.getMapperClassName(),
-                appRequest.getRepositoryObjectName(),
-                appRequest.getMapperClassName()
-        ));
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> update(");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id, ");
+        code.append(appRequest.getDtoClassName());
+        code.append(" dto) {\n");
+        code.append("\t\tlog.debug(\"update: {} -> {}\", id, dto);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append(".findById(id)\n");
+        code.append("\t\t\t.switchIfEmpty(Mono.error(new ");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append("(id)))\n");
+        code.append("\t\t\t.map(e -> ");
+        code.append(appRequest.getMapperClassName());
+        code.append(".update(dto, e))\n");
+        code.append("\t\t\t.flatMap(");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append("::save)\n");
+        code.append("\t\t\t.map(");
+        code.append(appRequest.getMapperClassName());
+        code.append("::toDto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // delete
-        code.append("""
-                \tpublic Mono<Void> delete(UUID id) {
-                \t\tlog.debug("delete: {}", id);
-                \t\treturn %s.findById(id)
-                \t\t\t.switchIfEmpty(Mono.error(new UserNotFoundException(id)))
-                \t\t\t.flatMap(u -> %s.delete(u));
-                \t}
-                
-                """.formatted(
-                appRequest.getRepositoryObjectName(),
-                appRequest.getRepositoryObjectName()
-        ));
+        code.append("\tpublic Mono<Void> delete(");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id) {\n");
+        code.append("\t\tlog.debug(\"delete: {}\", id);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append(".findById(id)\n");
+        code.append("\t\t\t.switchIfEmpty(Mono.error(new ");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append("(id)))\n");
+        code.append("\t\t\t.flatMap(u -> ");
+        code.append(appRequest.getRepositoryObjectName());
+        code.append(".delete(u));\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // end class
         FileBuilderUtil.appendClassEnd(code);
 
         return code;
     }
+
 }

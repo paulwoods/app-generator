@@ -42,6 +42,8 @@ public final class ControllerFileBuilder implements FileBuilder {
         code.append(FileBuilderUtil.absoluteService(appRequest));
         code.append(";\n");
 
+        code.append("import org.springframework.http.ProblemDetail\n");
+
         technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.CONTROLLER, code));
         code.append("\n");
 
@@ -61,90 +63,93 @@ public final class ControllerFileBuilder implements FileBuilder {
         code.append(";\n\n");
 
         // list
-        code.append("""
-                \t@GetMapping
-                \tpublic Flux<%s> list() {
-                \t\tlog.info("list");
-                \t\treturn %s.list();
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getServiceObjectName()
-        ));
+        code.append("\t@GetMapping\n");
+        code.append("\tpublic Flux<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> list() {\n");
+        code.append("\t\tlog.info(\"list\");\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getServiceObjectName());
+        code.append(".list();\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // create
-        code.append("""
-                \t@PostMapping
-                \t@ResponseStatus(code = HttpStatus.CREATED)
-                \tpublic Mono<%s> create(@Valid @RequestBody %s dto) {
-                \t\tlog.info("create: {}", dto);
-                \t\treturn %s.create(dto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getDtoClassName(),
-                appRequest.getServiceObjectName()
-        ));
+        code.append("\t@PostMapping\n");
+        code.append("\t@ResponseStatus(code = HttpStatus.CREATED)\n");
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> create(@Valid @RequestBody ");
+        code.append(appRequest.getDtoClassName());
+        code.append(" dto) {\n");
+        code.append("\t\tlog.info(\"create: {}\", dto);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getServiceObjectName());
+        code.append(".create(dto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // read
-        code.append("""
-                \t@GetMapping("/{id}")
-                \tpublic Mono<%s> read(@PathVariable UUID id) {
-                \t\tlog.info("read: {}", id);
-                \t\treturn %s.read(id);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getServiceObjectName()
-        ));
+        code.append("\t@GetMapping(\"/{id}\")\n");
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> read(@PathVariable ");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id) {\n");
+        code.append("\t\tlog.info(\"read: {}\", id);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getServiceObjectName());
+        code.append(".read(id);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // update
-        code.append("""
-                \t@PutMapping("/{id}")
-                \tpublic Mono<%s> update(@PathVariable UUID id, @Valid @RequestBody %s dto) {
-                \t\tlog.info("update: {} -> {}", id, dto);
-                \t\treturn %s.update(id, dto);
-                \t}
-                
-                """.formatted(
-                appRequest.getDtoClassName(),
-                appRequest.getDtoClassName(),
-                appRequest.getServiceObjectName()
-        ));
+        code.append("\t@PutMapping(\"/{id}\")\n");
+        code.append("\tpublic Mono<");
+        code.append(appRequest.getDtoClassName());
+        code.append("> update(@PathVariable ");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id, @Valid @RequestBody ");
+        code.append(appRequest.getDtoClassName());
+        code.append(" dto) {\n");
+        code.append("\t\tlog.info(\"update: {} -> {}\", id, dto);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getServiceObjectName());
+        code.append(".update(id, dto);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // delete
-        code.append("""
-                \t@DeleteMapping("/{id}")
-                \t@ResponseStatus(code = HttpStatus.NO_CONTENT)
-                \tpublic Mono<Void> delete(@PathVariable UUID id) {
-                \t\tlog.info("delete: {}", id);
-                \t\treturn %s.delete(id);
-                \t}
-                
-                """.formatted(
-                appRequest.getServiceObjectName()
-        ));
+        code.append("\t@DeleteMapping(\"/{id}\")\n");
+        code.append("\t@ResponseStatus(code = HttpStatus.NO_CONTENT)\n");
+        code.append("\tpublic Mono<Void> delete(@PathVariable ");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id) {\n");
+        code.append("\t\tlog.info(\"delete: {}\", id);\n");
+        code.append("\t\treturn ");
+        code.append(appRequest.getServiceObjectName());
+        code.append(".delete(id);\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // not found exception
-        code.append("""
-                \t@ExceptionHandler(%s.class)
-                \tpublic ProblemDetail handleException(%s ex) {
-                \t\tvar problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-                \t\tproblem.setType(URI.create("http://www.example.com/problems/%s/not-found"));
-                \t\tproblem.setTitle("%s Not Found");
-                \t\tproblem.setDetail(ex.getMessage());
-                \t\treturn problem;
-                \t}
-                
-                """.formatted(
-                appRequest.getNotFoundExceptionClassName(),
-                appRequest.getNotFoundExceptionClassName(),
-                appRequest.getEntityObjectName(),
-                appRequest.getEntityClassName()
-        ));
+        code.append("\t@ExceptionHandler(");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append(".class)\n");
+        code.append("\tpublic ProblemDetail handleException(");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append(" ex) {\n");
+        code.append("\t\tvar problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());\n");
+        code.append("\t\tproblem.setType(URI.create(\"http://www.example.com/problems/");
+        code.append(appRequest.getEntityObjectName());
+        code.append("/not-found\"));\n");
+        code.append("\t\tproblem.setTitle(\"");
+        code.append(appRequest.getEntityClassName());
+        code.append(" Not Found\");\n");
+        code.append("\t\tproblem.setDetail(ex.getMessage());\n");
+        code.append("\t\treturn problem;\n");
+        code.append("\t}\n");
+        code.append("\n");
 
         // end class
         FileBuilderUtil.appendClassEnd(code);

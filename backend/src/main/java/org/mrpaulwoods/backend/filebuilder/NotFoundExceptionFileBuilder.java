@@ -34,8 +34,11 @@ public final class NotFoundExceptionFileBuilder implements FileBuilder {
         FileBuilderUtil.appendPackage("exception", appRequest, code);
 
         // imports
+        int before = code.getContentAsString().length();
         technologies.forEach(technology -> technology.importCodeBlock(appRequest, FileBuilderType.NOTFOUND_EXCEPTION, code));
-        code.append("\n");
+        if (before != code.getContentAsString().length()) {
+            code.append("\n");
+        }
 
         // class
         code.append("public class ");
@@ -43,15 +46,15 @@ public final class NotFoundExceptionFileBuilder implements FileBuilder {
         code.append(" extends RuntimeException {\n\n");
 
         // constructor
-        code.append("""
-                \tpublic %s(UUID id) {
-                \t\tsuper("The %s was not found: " + id);
-                \t}
-                
-                """.formatted(
-                appRequest.getNotFoundExceptionClassName(),
-                appRequest.getEntityObjectName()
-        ));
+        code.append("\tpublic ");
+        code.append(appRequest.getNotFoundExceptionClassName());
+        code.append("(");
+        code.append(appRequest.getIdFieldType());
+        code.append(" id) {\n");
+        code.append("\t\tsuper(\"The ");
+        code.append(appRequest.getEntityObjectName());
+        code.append(" was not found: \" + id);\n");
+        code.append("\t}\n\n");
 
         // end class
         FileBuilderUtil.appendClassEnd(code);

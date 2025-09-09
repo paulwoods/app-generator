@@ -18,17 +18,15 @@ public class SmokeTestsIT extends BaseTest {
     @LocalServerPort
     private int port;
 
+    private AppRequest appRequest;
+
     @BeforeEach
     void setUp() {
         webClient = WebClient.builder()
                 .baseUrl("http://localhost:" + port)
                 .build();
-    }
 
-    @Test
-    void create() {
-
-        AppRequest appRequest = AppRequest.builder()
+        appRequest = AppRequest.builder()
                 .entity("User")
                 .pkg("org.mrpaulwoods.application")
                 .field(Field.builder()
@@ -41,14 +39,21 @@ public class SmokeTestsIT extends BaseTest {
                         .type("String")
                         .build())
                 .build();
+    }
 
-        webClient.post()
+    public StepVerifier.FirstStep<GenerateResults> post() {
+        return webClient.post()
                 .uri("/v1/generate")
                 .bodyValue(appRequest)
                 .retrieve()
                 .bodyToMono(GenerateResults.class)
-                .as(StepVerifier::create)
-                .assertNext(gr -> {
+                .as(StepVerifier::create);
+    }
+
+    @Test
+    void entity() {
+
+        post().assertNext(gr -> {
 
                     Assertions.assertEquals(7, gr.codes().size());
 
@@ -74,8 +79,15 @@ public class SmokeTestsIT extends BaseTest {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(DTO);
+    @Test
+    void dto() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(DTO);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/dto/UserDto.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.dto;
@@ -95,8 +107,15 @@ public class SmokeTestsIT extends BaseTest {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(MAPPER);
+    @Test
+    void mapper() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(MAPPER);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/mapper/UserMapper.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.mapper;
@@ -137,8 +156,15 @@ public class SmokeTestsIT extends BaseTest {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(REPOSITORY);
+    @Test
+    void repository() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(REPOSITORY);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/repository/UserRepository.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.repository;
@@ -165,8 +191,15 @@ public class SmokeTestsIT extends BaseTest {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(SERVICE);
+    @Test
+    void service() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(SERVICE);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/service/UserService.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.service;
@@ -228,8 +261,15 @@ public class SmokeTestsIT extends BaseTest {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(CONTROLLER);
+    @Test
+    void controller() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(CONTROLLER);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/controller/UserController.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.controller;

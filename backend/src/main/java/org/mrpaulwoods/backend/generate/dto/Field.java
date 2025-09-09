@@ -15,6 +15,7 @@ public class Field {
     private Integer minSize;
     private Integer maxSize;
     private boolean id;
+    private boolean nullable;
 
     public String getGetterName() {
         return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);

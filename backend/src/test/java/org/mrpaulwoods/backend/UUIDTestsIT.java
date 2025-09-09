@@ -5,32 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
-import org.mrpaulwoods.backend.generate.dto.GenerateResults;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.test.StepVerifier;
 
 import static org.mrpaulwoods.backend.utils.FileBuilderName.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BackendApplicationIT {
-
-    WebClient webClient;
-    @LocalServerPort
-    private int port;
+public class UUIDTestsIT extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        webClient = WebClient.builder()
-                .baseUrl("http://localhost:" + port)
-                .build();
-    }
+        super.setUp();
 
-    @Test
-    void create() {
-
-        AppRequest appRequest = AppRequest.builder()
+        appRequest = AppRequest.builder()
                 .entity("User")
                 .pkg("org.mrpaulwoods.application")
                 .field(Field.builder()
@@ -48,14 +32,12 @@ public class BackendApplicationIT {
                         .type("LocalDateTime")
                         .build())
                 .build();
+    }
 
-        webClient.post()
-                .uri("/v1/generate")
-                .bodyValue(appRequest)
-                .retrieve()
-                .bodyToMono(GenerateResults.class)
-                .as(StepVerifier::create)
-                .assertNext(gr -> {
+    @Test
+    void create() {
+
+        post().assertNext(gr -> {
 
                     Assertions.assertEquals(7, gr.codes().size());
 
@@ -85,8 +67,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(DTO);
+    @Test
+    void dto() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(DTO);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/dto/UserDto.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.dto;
@@ -112,8 +101,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(MAPPER);
+    @Test
+    void mapper() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(MAPPER);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/mapper/UserMapper.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.mapper;
@@ -157,8 +153,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(REPOSITORY);
+    @Test
+    void repository() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(REPOSITORY);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/repository/UserRepository.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.repository;
@@ -171,8 +174,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(NOTFOUND);
+    @Test
+    void notFound() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(NOTFOUND);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/exception/UserNotFoundException.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.exception;
@@ -188,8 +198,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(SERVICE);
+    @Test
+    void service() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(SERVICE);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/service/UserService.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.service;
@@ -252,8 +269,15 @@ public class BackendApplicationIT {
                             }
                             
                             """, code.getContentAsString());
+                })
+                .verifyComplete();
+    }
 
-                    code = gr.code(CONTROLLER);
+    @Test
+    void controller() {
+        post().assertNext(gr -> {
+
+                    Code code = gr.code(CONTROLLER);
                     Assertions.assertEquals("src/main/java/org/mrpaulwoods/application/controller/UserController.java", code.getFileName());
                     Assertions.assertEquals("""
                             package org.mrpaulwoods.application.controller;

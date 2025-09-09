@@ -5,26 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mrpaulwoods.backend.generate.dto.AppRequest;
 import org.mrpaulwoods.backend.generate.dto.Field;
-import org.mrpaulwoods.backend.generate.dto.GenerateResults;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.test.StepVerifier;
 
 import static org.mrpaulwoods.backend.utils.FileBuilderName.*;
 
 public class SmokeTestsIT extends BaseTest {
 
-    WebClient webClient;
-    @LocalServerPort
-    private int port;
-
-    private AppRequest appRequest;
-
     @BeforeEach
     void setUp() {
-        webClient = WebClient.builder()
-                .baseUrl("http://localhost:" + port)
-                .build();
+        super.setUp();
 
         appRequest = AppRequest.builder()
                 .entity("User")
@@ -39,15 +27,6 @@ public class SmokeTestsIT extends BaseTest {
                         .type("String")
                         .build())
                 .build();
-    }
-
-    public StepVerifier.FirstStep<GenerateResults> post() {
-        return webClient.post()
-                .uri("/v1/generate")
-                .bodyValue(appRequest)
-                .retrieve()
-                .bodyToMono(GenerateResults.class)
-                .as(StepVerifier::create);
     }
 
     @Test

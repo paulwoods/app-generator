@@ -32,6 +32,28 @@ export const HomeIndexPage = () => {
 
     const code = results && results.codes.find(c => c.name === tab)
 
+    const canDownload = results != null;
+
+    const handleDownload = (appRequest: AppRequestType) => {
+
+        axios.post("/backend/v1/download", appRequest, {
+            responseType: "blob",
+        })
+            .then(res => {
+                const contentType = res.headers['content-type'] || 'application/zip'
+                const blob = new Blob([res.data], {type: contentType})
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = 'download.zip'
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+                window.URL.revokeObjectURL(url)
+            })
+            .catch(console.error)
+    };
+
     return <Box sx={{flexGrow: 1}}>
         <AppBar position="static" enableColorOnDark>
             <Toolbar>
@@ -64,7 +86,12 @@ export const HomeIndexPage = () => {
 
         <Paper sx={{m: 3}}>
             {tab === "FORM" && <Box sx={{p: 4, width: "100%"}}>
-              <RequestForm storage="home.request-form" onGenerate={handleGenerate}/>
+              <RequestForm
+                storage="home.request-form"
+                onGenerate={handleGenerate}
+                canDownload={canDownload}
+                onDownload={handleDownload}
+              />
             </Box>}
 
             {code && <CodeComponent code={code}/>}

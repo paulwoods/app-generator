@@ -3,12 +3,15 @@ import type {AppRequestType, FieldType} from "../../types.ts";
 import {Box, Button, TextField} from "@mui/material";
 import {produce} from "immer";
 import {Fields} from "./Fields.tsx";
+import {NavLink} from "react-router";
 
 type AppRequestFormProps = {
     storage: string
     onGenerate: (appRequest: AppRequestType) => void
+    canDownload: boolean
+    onDownload: (appRequest: AppRequestType) => void
 }
-export const RequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
+export const RequestForm = ({storage, onGenerate, canDownload, onDownload}: AppRequestFormProps) => {
 
     const [appRequest, setAppRequest] = useLocalStorage<AppRequestType>(storage,
         {
@@ -37,6 +40,10 @@ export const RequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
 
     const handleGenerate = () => {
         onGenerate(appRequest);
+    };
+
+    const handleDownload = () => {
+        onDownload(appRequest);
     };
 
     const updateField = (newField: FieldType, index: number) => {
@@ -97,10 +104,21 @@ export const RequestForm = ({storage, onGenerate}: AppRequestFormProps) => {
                     onChange={(e) => setAppRequest({...appRequest, pkg: e.target.value})}
                 />
 
-                <div>
-                    <Button variant="contained" onClick={handleGenerate}
-                            disabled={!canGenerate}>Generate</Button>
-                </div>
+                <Box>
+                    <Box sx={{display: "flex", gap: 2}}>
+                        <Button size="small" variant="contained" onClick={handleGenerate}
+                                color="primary"
+                                disabled={!canGenerate}>Generate</Button>
+
+                        <NavLink to="#">
+                            <Button size="small" variant="contained" onClick={handleDownload}
+                                    color="secondary"
+                                    disabled={!canDownload}>Download</Button>
+                        </NavLink>
+
+                    </Box>
+
+                </Box>
 
             </Box>
 

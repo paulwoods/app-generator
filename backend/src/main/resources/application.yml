@@ -17,3 +17,16 @@ spring:
   sql:
     init:
       mode: always
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info,prometheus
+#  metrics:
+#    tags:
+#      application: metrics-demo
+#  prometheus:
+#    metrics:
+#      export:
+#        enabled: true

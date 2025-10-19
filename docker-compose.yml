@@ -1,0 +1,14 @@
+#version: "3.9"
+services:
+  app:
+    working_dir: ./backend
+    build: .
+    ports:
+      - "8080:8080"
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./backend/src/main/resources/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
